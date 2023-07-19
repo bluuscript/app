@@ -2,9 +2,9 @@ import sys
 sys.path.append(".")
 
 from conn.conn import ConectarBD
-# 🎗️ Terminadas los tests:
-# Sacar modelo Personal ( no es necesario )
-from modelo.personal import Personal
+
+# Se usa como tipo
+# from modelo.personal import Personal
 
 class daoRRHH:
     def __init__(self):
@@ -17,7 +17,7 @@ class daoRRHH:
     def getConn(self):
         return self.conn
     
-    def addPersonal(self, Personal:Personal):
+    def addPersonal(self, Personal):
         sql_insertarCargo = "INSERT INTO `cargo` (`cargoID`, `cargoNombre`, `cargoFechaIngreso`) \
             VALUES (%s,%s,%s)"
         sql_insertarDepartamento = "INSERT INTO `departamento` (`departamentoID`, `departamentoNombre`) \
@@ -79,6 +79,17 @@ class daoRRHH:
         except Exception as ex:
             print(ex)
         return self.cursor.fetchall()
+    
+    def getOneRegistro(self, Personal):
+        try:
+            self.cursor.execute(
+            """SELECT `personalRut`, `personalNombre`, `personalGenero`,
+            `cargoNombre` FROM `personal` P JOIN `cargo` C ON P.cargoID = C.cargoID
+            JOIN `departamento` D on P.departamentoID = D.departamentoID JOIN 
+            `area` A on P.areaID = A.areaID WHERE personalRut = %s""", (Personal.personalRut,))
+        except Exception as ex:
+            print("getOneRegistro error:", ex)
+        return self.cursor.fetchone()
     
     def updatePersonal(self, Personal):
         sql_personal="UPDATE `personal` SET `personalNombre`=%s, `personalGenero`=%s, `personalDireccion`=%s \

@@ -27,8 +27,13 @@ class dtoRRHH:
                     personalGenero=registro[2], cargoNombre=registro[3]
                     )
                 lista_registros.append(registro_personal)
-        return lista_registros
-
+        return lista_registros if lista_registros is not None else None
+    
+    def buscarRegistro(self, personalRut):
+        
+        resultado = daoRRHH().getOneRegistro(Personal=Personal(personalRut=personalRut))
+        return resultado if resultado is not None else None
+    
     def modificarPersonal(self, personalRut, personalNombre, personalGenero, personalDireccion, telefonoPersonalNumero, cargoNombre, cargoFechaIngreso, areaNombre,
                     departamentoNombre, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros, cargaNombre, cargaParentesco, cargaGenero, cargaRut):
         
