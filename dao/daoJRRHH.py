@@ -2,13 +2,12 @@ import sys
 sys.path.append(".")
 
 from dao.daoRRHH import daoRRHH
-from modelo.personal import Personal
 
 class daoJRRHH(daoRRHH):
-    # ✅
+
     def getRegistrosFiltro(self, Personal):
-        sql_filtrarNomina = """SELECT `personalRut`, `personalNombre`, `personalGenero`, `personalDireccion`, 
-            `cargoNombre`, `cargoFechaIngreso`, `departamentoNombre`, `areaNombre` 
+        sql_filtrarNomina = """SELECT `personalRut`, `personalNombre`, `personalGenero`,
+            `cargoNombre`, `areaNombre`, `departamentoNombre`
             FROM `personal` P JOIN `cargo` C ON P.cargoID = C.cargoID 
             JOIN `departamento` D on P.departamentoID = D.departamentoID JOIN 
             `area` A on P.areaID = A.areaID 
@@ -19,9 +18,4 @@ class daoJRRHH(daoRRHH):
         except Exception as ex:
             print(ex)
         return self.cursor.fetchall()
-    
-"""filtro1 =daoJRRHH().getRegistrosFiltro(
-    Personal(
-        personalGenero="F"
-    )
-)"""
+

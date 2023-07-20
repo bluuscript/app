@@ -1,1 +1,7 @@
 /.DS_Store
+./dao/__pycache__
+./dto/__pycache__
+./modelo/__pycache__
+./utils/__pycache__
+./validatio/__pycache__
+

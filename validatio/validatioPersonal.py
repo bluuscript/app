@@ -3,9 +3,7 @@ sys.path.append(".")
 from dto.dtoPersonal import dtoPersonal
 
 def miRegistro(personalRut):
-    print(f"""
-           Mi Registro - Nomina Personal 
-          """)
+
     mi_registro = dtoPersonal().miRegistro(personalRut=personalRut)
     
     if mi_registro is not None:
@@ -65,3 +63,20 @@ def modificarMiRegistro(peronalRut):
         telefonoContactoNumeros=contactoTelefonoNuevo
         )
     return resultado if resultado is not None else None
+
+def menuMiRegistro(personalRut):
+    salir = "n"
+    while salir == "n":
+        print(f"""
+                1. Ver Registro
+                2. Modificar Mi Registro
+                3. Salir
+        """)
+        opcion = input("> ")
+        
+        if opcion == 1:
+            miRegistro(personalRut)
+        elif opcion == 2:
+            modificarMiRegistro(personalRut)
+        salir = input("Salir de Mi Registro? [s/n] > ")
+        

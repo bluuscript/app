@@ -4,7 +4,7 @@ sys.path.append(".")
 from conn.conn import ConectarBD
 
 # Se usa como tipo
-# from modelo.personal import Personal
+from modelo.personal import Personal
 
 class daoRRHH:
     def __init__(self):
@@ -17,7 +17,7 @@ class daoRRHH:
     def getConn(self):
         return self.conn
     
-    def addPersonal(self, Personal):
+    def addPersonal(self, Personal:Personal):
         sql_insertarCargo = "INSERT INTO `cargo` (`cargoID`, `cargoNombre`, `cargoFechaIngreso`) \
             VALUES (%s,%s,%s)"
         sql_insertarDepartamento = "INSERT INTO `departamento` (`departamentoID`, `departamentoNombre`) \
@@ -55,9 +55,10 @@ class daoRRHH:
             # Ejecutar consulta insertar contactos - FALTA BUCLE FOR
             self.cursor.execute(sql_insertarContactos, (Personal.contactoID, Personal.contactoNombre, Personal.contactoRelacionPersonal, Personal.personalRut,))
             self.conn.getConn().commit()
-            # Ejecutar consulta insertar telefonos contacto - FALTA BUCLE FOR
-            self.cursor.execute(sql_insertarTelefonosContacto, (Personal.telefonoContactoNumeros, Personal.contactoID,))
-            self.conn.getConn().commit()
+            # Insertar cada telefono contacto:
+            for telefonoContacto in Personal.telefonoContactoNumeros:
+                self.cursor.execute(sql_insertarTelefonosContacto, (telefonoContacto, Personal.contactoID,))
+                self.conn.getConn().commit()
             
             if self.cursor.rowcount > 0:
                 print(f"Personal {Personal.personalRut} Agregado")
@@ -110,46 +111,53 @@ class daoRRHH:
             if self.conn.getConn().is_connected():
                 self.conn.closeConn()
         
-    def getIDsPersonal(self, personalRut):
+    def getTablasIDs(self, personalRut):
         sql_get_IDs = "SELECT `cargoID`, `departamentoID`, `areaID` FROM `personal` \
                 WHERE `personalRut`=%s"
-        sql_telefonoID = "SELECT `telefonoContactoID` FROM contactos WHERE `personalRutContacto`=%s"
+        sql_telefonoID = "SELECT `telefonoContactoID` FROM telefonosContacto T JOIN contactos C \
+            ON T.telefonoContactoID = C.contactoID WHERE `personalRutContacto`=%s"
         try:
             self.cursor.execute(sql_get_IDs, (personalRut,))
             listaIDs = self.cursor.fetchall()
             self.cursor.execute(sql_telefonoID, (personalRut,))
             listaIDs.append(self.cursor.fetchone())
         except Exception as error:
-            print("Error getIds: ", error)
+            print("getTablasIDs error: ", error)
         return listaIDs
     
     def deletePersonal(self, Personal):
-        listaIDs = self.getIDsPersonal(Personal.personalRut)
-        
+        tablasIDs = self.getTablasIDs(personalRut=Personal.personalRut)
+                
         sql_eliminarPersonal ="DELETE FROM `personal` WHERE `personalRut`=%s"
         sql_eliminarCargas = "DELETE FROM `cargas` WHERE `personalRutRelacionCarga`=%s"
-        
+        sql_eliminarTelefonos ="DELETE FROM `telefonosPersonal` WHERE `personalRutDueñoNumero`=%s"
+                
         sql_eliminarContactos ="DELETE FROM `contactos` WHERE `personalRutContacto`=%s"
         sql_eliminarContactosTelefonos = "DELETE FROM `telefonosContacto` WHERE \
             `telefonoContactoID`=%s"
             
-        sql_eliminarTelefonos ="DELETE FROM `telefonosPersonal` WHERE `personalRutDueñoNumero`=%s"
-                 
         sql_eliminarCargo = "DELETE FROM `cargo` WHERE `cargoID`=%s"
+        #sql_eliminarCargo = "DELETE FROM cargo WHERE cargoID = (SELECT cargoID FROM personal WHERE personalRut = %s)"
         sql_eliminarDepartamento = "DELETE FROM `departamento` WHERE `departamentoID`=%s"
         sql_eliminarArea = "DELETE FROM `area` WHERE `areaID`=%s"
+              
         try:
-            # Eliminar Registro Personal con RUT
-            self.cursor.execute(sql_eliminarCargas, (Personal.personalRut,))
+            
             self.cursor.execute(sql_eliminarContactos, (Personal.personalRut,))
-            self.cursor.execute(sql_eliminarContactosTelefonos, (listaIDs[1],))
+            self.cursor.execute(sql_eliminarContactosTelefonos, (tablasIDs[1],))
+            
+            # Eliminar Registro Personal con RUT   
             self.cursor.execute(sql_eliminarTelefonos, (Personal.personalRut,))
+            self.cursor.execute(sql_eliminarCargas, (Personal.personalRut,))
             self.cursor.execute(sql_eliminarPersonal, (Personal.personalRut,))
+            
             # Eliminar Registro Personal con ID:
-            self.cursor.execute(sql_eliminarCargo, (listaIDs[0][0],))
-            self.cursor.execute(sql_eliminarDepartamento, (listaIDs[0][1],))
-            self.cursor.execute(sql_eliminarArea, (listaIDs[0][2],))
+            self.cursor.execute(sql_eliminarCargo, (tablasIDs[0][1],))
+            self.cursor.execute(sql_eliminarDepartamento, (tablasIDs[0][1],))
+            self.cursor.execute(sql_eliminarArea, (tablasIDs[0][2],))
+            
             self.conn.getConn().commit()
+            
             print(f"Rut: {Personal.personalRut} eliminado exitosamente")
         except Exception as error:
             print(f"Error: {error} al eliminar Personal: {Personal.personalRut}")

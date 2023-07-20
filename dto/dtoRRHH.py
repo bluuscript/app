@@ -5,15 +5,19 @@ from dao.daoRRHH import daoRRHH
 
 class dtoRRHH:
 
-    def agregarPersonalNomina(self, personalNombre, personalRut, personalGenero, personalDireccion, \
-                        telefonoPersonalNumero, cargoNombre, cargoFechaIngreso, areaNombre, \
-                        departamentoNombre, contactoNombre, contactoRelacionPersonal, telefonoContactoNumero, \
-                        cargaNombre, cargaParentesco, cargaGenero, cargaRut):
+    def agregarPersonalNomina(self,
+                        personalNombre, personalRut, personalGenero, personalDireccion, 
+                        telefonoPersonalNumeros,
+                        cargoNombre, cargoFechaIngreso,
+                        areaNombre, departamentoNombre,
+                        cargaNombre, cargaParentesco, cargaGenero, cargaRut,
+                        contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros
+                        ):
         
-        resultado_agregar = daoRRHH().addPersonal(Personal(personalNombre=personalNombre, personalRut=personalRut, personalGenero=personalGenero, personalDireccion=personalDireccion,\
-                                    telefonoPersonalNumero=telefonoPersonalNumero, cargoNombre=cargoNombre, cargoFechaIngreso=cargoFechaIngreso, \
-                                    areaNombre=areaNombre,departamentoNombre=departamentoNombre,\
-                                    contactoNombre=contactoNombre, contactoRelacionPersonal=contactoRelacionPersonal,telefonoContactoNumero=telefonoContactoNumero,\
+        resultado_agregar = daoRRHH().addPersonal(Personal(personalNombre=personalNombre, personalRut=personalRut, personalGenero=personalGenero, personalDireccion=personalDireccion,
+                                    telefonoPersonalNumeros=telefonoPersonalNumeros, cargoNombre=cargoNombre, cargoFechaIngreso=cargoFechaIngreso,
+                                    areaNombre=areaNombre,departamentoNombre=departamentoNombre,
+                                    contactoNombre=contactoNombre, contactoRelacionPersonal=contactoRelacionPersonal,telefonoContactoNumeros=telefonoContactoNumeros,
                                     cargaNombre=cargaNombre, cargaParentesco=cargaParentesco, cargaGenero=cargaGenero, cargaRut=cargaRut))
         return resultado_agregar if resultado_agregar is not None else None
 
@@ -32,7 +36,11 @@ class dtoRRHH:
     def buscarRegistro(self, personalRut):
         
         resultado = daoRRHH().getOneRegistro(Personal=Personal(personalRut=personalRut))
-        return resultado if resultado is not None else None
+        
+        return Personal(
+                personalRut=resultado[0], personalNombre=resultado[1],personalGenero=resultado[2],
+                cargoNombre=resultado[3]
+            ) if resultado is not None else None
     
     def modificarPersonal(self, personalRut, personalNombre, personalGenero, personalDireccion, telefonoPersonalNumero, cargoNombre, cargoFechaIngreso, areaNombre,
                     departamentoNombre, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros, cargaNombre, cargaParentesco, cargaGenero, cargaRut):

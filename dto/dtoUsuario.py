@@ -8,16 +8,13 @@ class UsuarioDTO:
     def autenticarUsuario(self, usuarioCorreo, usuarioContraseña):
         daousuario = daoUsuario()
         resultado = daousuario.autenticarUsuario(usuarioCorreo = usuarioCorreo, usuarioContraseña = usuarioContraseña)
-        usuario = Usuario(
-                usuarioCorreo=resultado[0],
-                usuarioNombre=resultado[1],
-                usuarioTipoPersonal=resultado[2],
-                usuarioPersonalRut=resultado[3])
-        
-        if usuario is not None:
-            return usuario
-        else:
-            None
+        if resultado is not None:
+            return Usuario(
+                    usuarioCorreo=resultado[0],
+                    usuarioNombre=resultado[1],
+                    usuarioTipoPersonal=resultado[2],
+                    usuarioPersonalRut=resultado[3])
+        else: None
     
     # insertarUsuario ✅
     def insertarUsuario(self, usuarioNombre, usuarioCorreo, usuarioContraseña, usuarioTipoPersonal, usuarioPersonalRut):

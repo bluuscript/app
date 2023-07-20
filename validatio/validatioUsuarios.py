@@ -12,10 +12,8 @@ def autenticarUsuario():
         """)
     usuarioCorreo = input("Correo > ")
     usuarioContraseña = input("Contraseña > ")
-    # Encriptar Contraseña del Usuario Ingresada
-    encode_contraseña = Encoder().encode(usuarioContraseña)
-    respuesta = UsuarioDTO().autenticarUsuario(usuarioCorreo, encode_contraseña)
-    return respuesta if respuesta else None
+    respuesta = UsuarioDTO().autenticarUsuario(usuarioCorreo,Encoder().encode(usuarioContraseña))
+    return respuesta if respuesta is not None else None
 
 # 💫 SOLO RRHH y JRRHH       
 def insertarUsuario():
@@ -32,7 +30,7 @@ def insertarUsuario():
         # Datos Usuario
         usuarioNombre = input("Nombre > ")
         usuarioClave = input("Contraseña* > ")
-        usuarioTipoPersonal = input("Tipo de Personal > ")
+        usuarioTipoPersonal = input("Tipo de Personal (COMUN - RRHH - JRRHH) > ")
         usuarioPersonalRut = input("RUT* > ")
         if usuarioClave == '' or usuarioPersonalRut == '':
             print("Contraseña y RUT Usuario REQUERIDOS")
@@ -45,3 +43,4 @@ def insertarUsuario():
         # Volver a Intentarlo 🚘 AUTO
         insertarUsuario()
 
+#insertarUsuario()

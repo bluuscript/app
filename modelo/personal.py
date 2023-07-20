@@ -5,7 +5,7 @@ from uuid import uuid1
 
 
 class Cargo:
-    def __init__(self, cargoNombre, cargoFechaIngreso=date.today()):
+    def __init__(self, cargoNombre, cargoFechaIngreso=""):
         self.cargoID = str(uuid1())
         self.cargoNombre = cargoNombre
         self.cargoFechaIngreso = cargoFechaIngreso
@@ -33,7 +33,7 @@ class Area:
         print(f"Nombre: {self.areaNombre}")
         
 class TelefonosContacto:
-    def __init__(self, telefonoContactoNumeros=[]):
+    def __init__(self, telefonoContactoNumeros):
         self.telefonoContactoNumeros = telefonoContactoNumeros
         
     def printTelefonosContacto(self):
@@ -41,7 +41,7 @@ class TelefonosContacto:
         print(f"\nTelefonos Contacto: {self.telefonoContactoNumeros}")
         
 class ContactosEmergencia(TelefonosContacto):
-    def __init__(self, contactoID=str(uuid1()), contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = []):
+    def __init__(self, contactoID=str(uuid1()), contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = ""):
         super().__init__(telefonoContactoNumeros)
         self.contactoID = contactoID
         self.contactoNombre = contactoNombre
@@ -62,7 +62,7 @@ class CargasFamiliares:
         return f"\nRUT: {self.cargaRut} - Nombre: {self.cargaNombre} - Género: {self.cargaGenero} - Parentesco: {self.cargaParentesco}"
 
 class TelefonosPersonal:
-    def __init__(self, telefonoPersonalNumeros=[]):
+    def __init__(self, telefonoPersonalNumeros):
         self.telefonoPersonalNumeros = telefonoPersonalNumeros
         
     def printTelefonosPersonal(self):
@@ -75,7 +75,7 @@ class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, C
                     #Tabla Personal
                     personalRut="", personalNombre="", personalGenero="", personalDireccion="",
                     # Tabla Cargo
-                    cargoNombre="", cargoFechaIngreso=date.today(),
+                    cargoNombre="", cargoFechaIngreso="",
                     # Tabla Departamento
                     departamentoNombre="", areaNombre="",
                     # Tabla TelefonosPersonal
@@ -92,7 +92,7 @@ class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, C
         
         TelefonosPersonal.__init__(self, telefonoPersonalNumeros)
 
-        CargasFamiliares.__init__(self, cargaRut, cargaNombre, cargaGenero, cargaParentesco)
+        CargasFamiliares.__init__(self, cargaRut, cargaNombre, cargaParentesco,  cargaGenero)
         ContactosEmergencia.__init__(self, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros)
         
         self.personalRut = personalRut
@@ -100,6 +100,6 @@ class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, C
         self.personalGenero = personalGenero
         self.personalDireccion = personalDireccion
 
-    def printPersonalResumen(self):
-    
-        print(f"\n\tRUT: {self.personalRut} - Nombre: {self.personalNombre} - Género: {self.personalGenero} - Cargo: {self.cargoNombre}")
+    def __str__(self):
+        # Resumen Personal
+        return f"\n\tRUT: {self.personalRut} - Nombre: {self.personalNombre} - Género: {self.personalGenero} - Cargo: {self.cargoNombre}"
