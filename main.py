@@ -11,12 +11,14 @@ intentos = 0
 while intentos < 3:
     resultado = autenticarUsuario()
     if resultado is not None:
+        # Tipo de Personal en La Empresa Dividio en 3 Grupos
+        tipoPersonal = resultado.usuarioTipoPersonal.upper()
         print(f"Bienvenido(a) Sr(a). {resultado.usuarioNombre}")
-        if resultado.usuarioTipoPersonal == "COMUN":
-            menuMiRegistro(resultado.usuarioPersonalRut)
-        elif resultado.usuarioTipoPersonal == "RRHH":
+        if tipoPersonal== "COMUN":
+            menuMiRegistro(personalRut=resultado.usuarioPersonalRut)
+        elif tipoPersonal == "RRHH":
             menuRRHH(usuarioPersonalRut=resultado.usuarioPersonalRut)
-        elif resultado.usuarioTipoPersonal == "JRRHH":
+        elif tipoPersonal == "JRRHH":
             #menuJRRHH()
             pass
         break

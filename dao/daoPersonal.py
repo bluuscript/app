@@ -2,6 +2,7 @@ import sys
 sys.path.append(".")
 
 from conn.conn import ConectarBD
+from modelo.personal import Personal
 
 class daoPersonal:
     
@@ -38,21 +39,21 @@ class daoPersonal:
             self.cursor.execute(sql_registroPersonal, (Personal.personalRut,))
             personal = self.cursor.fetchone()
             
-            self.cursor.execute(sql_personalTelefonos, (Personal.personalRut,))
-            personalTelefonos = self.cursor.fetchall()
+            #self.cursor.execute(sql_personalTelefonos, (Personal.personalRut,))
+            #personalTelefonos = self.cursor.fetchall()
             
-            self.cursor.execute(sql_registroCargas, (Personal.personalRut,))
-            personalCargas = self.cursor.fetchall()
+            #self.cursor.execute(sql_registroCargas, (Personal.personalRut,))
+            #personalCargas = self.cursor.fetchall()
             
-            self.cursor.execute(sql_registroContactos, (Personal.personalRut,))
-            personalContactos = self.cursor.fetchall()
+            #self.cursor.execute(sql_registroContactos, (Personal.personalRut,))
+            #personalContactos = self.cursor.fetchall()
             
-            self.cursor.execute(sql_contactosTelefonos, (Personal.personalRut,))
-            contactoTelefonos = self.cursor.fetchall()
+            #self.cursor.execute(sql_contactosTelefonos, (Personal.personalRut,))
+            #contactoTelefonos = self.cursor.fetchall()
 
         except Exception as error:
             print(f"Obtener Mi registro, error: {error}")
-        return personal, personalTelefonos, personalCargas, personalContactos, contactoTelefonos
+        return personal
     
     # Faltan Tablas ❗
     def modificarMiRegistro(self, Personal):
@@ -77,3 +78,9 @@ class daoPersonal:
         finally:
             if self.conn.getConn().is_connected():
                 self.conn.closeConn()
+                
+
+
+# reg = daoPersonal().getMiRegistro(Personal=
+#                                   Personal(personalRut="1-2"))
+# print(reg)

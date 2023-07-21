@@ -9,7 +9,18 @@ class dtoPersonal:
         # Obtener Registro mediante class daoPersonal()
         registro = daoPersonal().getMiRegistro(Personal=Personal(personalRut=personalRut))
         
-        return registro if registro is not None else None
+        personal = Personal(
+            personalRut=registro[0],
+            personalNombre=registro[1],
+            personalGenero=registro[2],
+            personalDireccion=registro[3],
+            cargoNombre=registro[4],
+            cargoFechaIngreso=registro[5],
+            departamentoNombre=registro[6],
+            areaNombre=registro[7]
+        )
+        
+        return personal if personal is not None else None
     
     def modificarMiRegistro(self, personaRut, personalNombre, personalGenero, personalDireccion, telefonoPersonalNumero,
             contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros, cargaRut, cargaNombre, cargaParentesco, cargaGenero):

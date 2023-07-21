@@ -72,11 +72,11 @@ def menuMiRegistro(personalRut):
                 2. Modificar Mi Registro
                 3. Salir
         """)
-        opcion = input("> ")
+        opcion = int(input("> "))
         
         if opcion == 1:
-            miRegistro(personalRut)
+            miRegistro(personalRut=personalRut)
         elif opcion == 2:
-            modificarMiRegistro(personalRut)
-        salir = input("Salir de Mi Registro? [s/n] > ")
+            modificarMiRegistro(personalRut=personalRut)
+        salir = input("\nSalir de Mi Registro? [s/n] > ")
         

@@ -10,10 +10,10 @@ Descarga este repositorio mediante CLI:
 git clone https://github.com/bluuscript/app.git
 ```
 
-## Cómo lo ejecuto?
+## Uso
 
 ```bash
-/filename/app => python3 main.py
+/app/ python3 main.py
 ```
 
 ## Licencia

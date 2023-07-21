@@ -147,6 +147,8 @@ def eliminarRegistro():
     
     if resultado is not None:
         return dtoRRHH().eliminarPersonal(personalRut=personalRut)
+    else:
+        print(f"No Existe Registro con RUT: {personalRut}")
 
 def menuRRHH(usuarioPersonalRut):
     volver = "s"
