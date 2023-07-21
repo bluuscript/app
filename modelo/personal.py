@@ -41,9 +41,9 @@ class TelefonosContacto:
         print(f"\nTelefonos Contacto: {self.telefonoContactoNumeros}")
         
 class ContactosEmergencia(TelefonosContacto):
-    def __init__(self, contactoID=str(uuid1()), contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = ""):
-        super().__init__(telefonoContactoNumeros)
-        self.contactoID = contactoID
+    def __init__(self, contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = []):
+        TelefonosContacto.__init__(self, telefonoContactoNumeros)
+        self.contactoID = str(uuid1())
         self.contactoNombre = contactoNombre
         self.contactoRelacionPersonal = contactoRelacionPersonal
         self.telefonoContactoNumeros = telefonoContactoNumeros

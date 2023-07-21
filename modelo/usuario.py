@@ -13,4 +13,3 @@ class Usuario:
     def __str__(self):
         return f"{self.usuarioCorreo} - {self.usuarioNombre} - {self.usuarioTipoPersonal} - {self.usuarioPersonalRut}"
 
-#user = Usuario("t@gmail.com", "Tomas", "12345678", "JRRHH", "1-1")

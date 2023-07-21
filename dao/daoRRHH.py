@@ -51,7 +51,6 @@ class daoRRHH:
                 self.conn.getConn().commit()
             # Ejecutar consulta insertar cargas - FALTA BUCLE FOR 
             self.cursor.execute(sql_insertarCargas, (Personal.cargaRut, Personal.cargaNombre, Personal.cargaParentesco, Personal.cargaGenero, Personal.personalRut,))
-            self.conn.getConn().commit()
             # Ejecutar consulta insertar contactos - FALTA BUCLE FOR
             self.cursor.execute(sql_insertarContactos, (Personal.contactoID, Personal.contactoNombre, Personal.contactoRelacionPersonal, Personal.personalRut,))
             self.conn.getConn().commit()
@@ -142,9 +141,8 @@ class daoRRHH:
         sql_eliminarArea = "DELETE FROM `area` WHERE `areaID`=%s"
               
         try:
-            
+            self.cursor.execute(sql_eliminarContactosTelefonos, (tablasIDs[1][0],))
             self.cursor.execute(sql_eliminarContactos, (Personal.personalRut,))
-            self.cursor.execute(sql_eliminarContactosTelefonos, (tablasIDs[1],))
             
             # Eliminar Registro Personal con RUT   
             self.cursor.execute(sql_eliminarTelefonos, (Personal.personalRut,))

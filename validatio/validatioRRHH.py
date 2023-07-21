@@ -97,7 +97,7 @@ def modificarRegistro():
     resultado = dtoRRHH().buscarRegistro(personalRut=personalRut)
     
     if resultado is not None:
-        print(resultado)
+        print("Registro: ", resultado)
         print("""
                 Datos Personales
               """)
@@ -107,7 +107,7 @@ def modificarRegistro():
         telefonosPersonalNumeros = []
         agregar_telefonoPersonal = "s"
         while agregar_telefonoPersonal == "s":
-            telefonoPersonal = input("Número de Telefono: +569")
+            telefonoPersonal = input("Número de Telefono: +569 ")
             telefonosPersonalNumeros.append(telefonoPersonal)
             agregar_telefonoPersonal = input("Desea agregar otro telefono? [s/n]")
         print("""
@@ -156,10 +156,10 @@ def menuRRHH(usuarioPersonalRut):
                     
                     Administrar Nomina
                     
-                2. Agregar Nuevo Registro
-                3. Listar Registros
-                4. Modificar Registro
-                5. Eliminar Registro
+                2. Agregar Nuevo Registro   ✅
+                3. Listar Registros         ✅
+                4. Modificar Registro       ❌
+                5. Eliminar Registro        ✅
                 
                 6. Salir
               """)
