@@ -127,7 +127,7 @@ def modificarRegistro():
         telefonoContactoNumeros = []
         agregar_telefonoContacto = "s"
         while agregar_telefonoContacto == "s":
-            telefonoContacto = input("Número de Telefono: +569")
+            telefonoContacto = input("Número de Telefono: +569 ")
             telefonoContactoNumeros.append(telefonoContacto)
             agregar_telefonoContacto = input("Desea agregar otro telefono? [s/n]")
         print("""

@@ -4,7 +4,7 @@ sys.path.append(".")
 from conn.conn import ConectarBD
 
 # Se usa como tipo
-from modelo.personal import Personal
+#from modelo.personal import Personal
 
 class daoRRHH:
     def __init__(self):
@@ -17,7 +17,7 @@ class daoRRHH:
     def getConn(self):
         return self.conn
     
-    def addPersonal(self, Personal:Personal):
+    def addPersonal(self, Personal):
         sql_insertarCargo = "INSERT INTO `cargo` (`cargoID`, `cargoNombre`, `cargoFechaIngreso`) \
             VALUES (%s,%s,%s)"
         sql_insertarDepartamento = "INSERT INTO `departamento` (`departamentoID`, `departamentoNombre`) \
@@ -92,20 +92,33 @@ class daoRRHH:
         return self.cursor.fetchone()
     
     def updatePersonal(self, Personal):
-        sql_personal="UPDATE `personal` SET `personalNombre`=%s, `personalGenero`=%s, `personalDireccion`=%s \
-            WHERE `personalRut`=%s"
+        # Modificar Datos Personales
+        sql_personal=""""UPDATE `personal` SET `personalNombre`=%s, `personalGenero`=%s, `personalDireccion`=%s
+            WHERE `personalRut`=%s"""
+        # Modificar Telefono Personal
+        sql_personalTelefonos = """UPDATE telefonosPersonal SET telefonoPersonalNumero=%s
+            WHERE telefonoContactoNumero=%s"""
         # Modificar Cargo, Departamento y Area del Personal
-        sql_cargo = ""  
-        sql_departamento = ""
-        sql_area = ""
-        # Modificar Cargas, Contactos - telefonosContacto, telefonosPersonal 
+        sql_cargo = """UPDATE cargo SET cargoNombre=%s, cargoFechaIngreso=%s
+            WHERE cargoID = (SELECT cargoID FROM personal WHERE personalRut=%s)"""  
+        sql_departamento = """UPDATE departamento SET departamentoNombre=%s
+            WHERE departamentoID = (SELECT departamentoID FROM personal WHERE personalRut=%s)"""
+        sql_area = """UPDATE area SET areaNombre=%s
+            WHERE areaID = (SELECT areaID FROM personal WHERE personalRut=%s)"""
+        
+        # Modificar Cargas, Contactos => telefonosContacto
+        sql_carga = """UPDATE cargas SET cargaNombre=%s, cargaGenero=%s, cargaParentesco=%s
+                WHERE personalRutRelacionCarga=%s"""
+        sql_contacto = """UPDATE contactos SET contactoNombre=%s, contactoRelacionConPersonal=%s
+            WHERE personalRutContacto=%s"""
+        sql_contactoTelefono="""UPDATE telefonosContacto SET telefonoContactoNumero=%s
+            WHERE telefonoContactoNumero=%s"""
         try:
-            # Se modifica solo registro en talbla => personal
-            self.cursor.execute(sql_personal,(Personal.personalNombre, Personal.personalGenero,\
+            self.cursor.execute(sql_personal, (Personal.personalNombre, Personal.personalGenero,
                 Personal.personalDireccion, Personal.personalRut,))
             self.conn.getConn().commit()
         except Exception as error:
-            print(error)
+            print("updatePersonal(), error", error)
         finally:
             if self.conn.getConn().is_connected():
                 self.conn.closeConn()
