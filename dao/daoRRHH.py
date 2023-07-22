@@ -35,7 +35,7 @@ class daoRRHH:
         # Consulta para Insertar Contactos Personal
         sql_insertarContactos = """INSERT INTO contactos ( contactoID, contactoRut, contactoNombre, contactoRelacionConPersonal, personalRutContacto)
             VALUES (%s,%s,%s,%s,%s)"""
-        # Consulta para Insertar Telefoonos Contactos
+        # Consulta para Insertar Telefonos Contacto
         sql_insertarTelefonosContacto = """INSERT INTO telefonosContacto (telefonoContactoNumero, telefonoContactoID)
             VALUES (%s,%s)""" 
         try:
@@ -49,9 +49,9 @@ class daoRRHH:
             for telefono in Personal.telefonoPersonalNumeros: 
                 self.cursor.execute(sql_insertarTelefonosPersonal, (telefono, Personal.personalRut,))
                 self.conn.getConn().commit()
-            # Ejecutar consulta insertar cargas - FALTA BUCLE FOR 
+            # Ejecutar consulta insertar cargas
             self.cursor.execute(sql_insertarCargas, (Personal.cargaRut, Personal.cargaNombre, Personal.cargaParentesco, Personal.cargaGenero, Personal.personalRut,))
-            # Ejecutar consulta insertar contactos - FALTA BUCLE FOR
+            # Ejecutar consulta insertar contactos
             self.cursor.execute(sql_insertarContactos, (Personal.contactoID, Personal.contactoRut, Personal.contactoNombre, Personal.contactoRelacionPersonal, Personal.personalRut,))
             self.conn.getConn().commit()
             # Insertar cada telefono contacto:
@@ -153,3 +153,6 @@ class daoRRHH:
             print(f"Rut: {Personal.personalRut} eliminado exitosamente")
         except Exception as error:
             print(f"Error: {error} al eliminar Personal: {Personal.personalRut}")
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()

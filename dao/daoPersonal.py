@@ -16,7 +16,6 @@ class daoPersonal:
     def getConn(self):
         return self.conn
     
-    # Faltan Tablas ❗
     def getMiRegistro(self, Personal):
         sql_registroPersonal = """SELECT `personalRut`, `personalNombre`, `personalGenero`, `personalDireccion`,
             `cargoNombre`, `cargoFechaIngreso`, `departamentoNombre`, `areaNombre`
@@ -52,9 +51,13 @@ class daoPersonal:
             personalContactos = self.cursor.fetchall()
             self.conn.getConn().commit()
             
-            for contactoID in personalContactos[0]:
-                self.cursor.execute(sql_contactosTelefonos, (contactoID,))
-                contactoTelefonos = self.cursor.fetchall()
+            contactoTelefonos = []
+            for contacto in personalContactos:
+                self.cursor.execute(sql_contactosTelefonos, (contacto[3],))
+                contactoTelefonos.append({
+                    "contactoID": contacto[3],
+                    "telefonosContacto": self.cursor.fetchall()
+                })
 
         except Exception as error:
             print(f"Obtener Mi registro, error: {error}")
@@ -67,29 +70,52 @@ class daoPersonal:
             print("Existe Registro, error:", ex)
         return self.cursor.fetchone()
     
-    
-    # Faltan Tablas ❗
     def modificarMiRegistro(self, Personal):
         sql_Personal = "UPDATE `personal` SET `personalNombre`=%s, `personalGenero`=%s, \
             `personalDireccion`=%s WHERE `personalRut`=%s"
-        # Modificar Cargas, Contactos - telefonosContacto, telefonosPersonal
-        # Modificar Cargas del Personal 
-        sql_Cargas = "UPDATE `cargas` SET `cargaRut`=%s, `cargaNombre`=%s, \
-            `cargaParentesco`=%s, `cargaGenero`=%s WHERE `personalRutRelacionCarga=%s`"
-        # Modificar Contactos Personal
-        sql_Contactos = "UPDATE `contactos` "
         try:
             # Se modifica registro en Tabla => Personal
             self.cursor.execute(sql_Personal, (Personal.personalNombre, Personal.personalGenero,\
                 Personal.personalDireccion, Personal.personalRut,))
-            # Modificar Cargas
-            self.cursor.execute(sql_Cargas, (Personal.atributos,))
-            # Modificar Departamento
-            self.conn.getConn().commit()
         except Exception as error:
-            print(error)
+            print("modificarMiRegistro(), error:", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()
+    
+    def agregarContacto(self, Personal):
+        # Consulta para Insertar Contactos Personal
+        sql_agregarContacto="""INSERT INTO contactos ( contactoID, contactoRut, contactoNombre, contactoRelacionConPersonal, personalRutContacto)
+            VALUES (%s,%s,%s,%s,%s)"""
+        # Consulta para Insertar Telefonos del Contacto
+        sql_insertarTelefonosContacto = """INSERT INTO telefonosContacto (telefonoContactoNumero, telefonoContactoID)
+            VALUES (%s,%s)"""
+        try:
+             # Ejecutar consulta insertar contactos
+            self.cursor.execute(sql_agregarContacto, (Personal.contactoID, Personal.contactoRut, Personal.contactoNombre, Personal.contactoRelacionPersonal, Personal.personalRut,))
+            self.conn.getConn().commit()
+            # Insertar cada telefono contacto:
+            for telefonoContacto in Personal.telefonoContactoNumeros:
+                self.cursor.execute(sql_insertarTelefonosContacto, (telefonoContacto, Personal.contactoID,))
+                self.conn.getConn().commit()
+        except Exception as error:
+            print("agregarContacto(), error: ", error)
         finally:
             if self.conn.getConn().is_connected():
                 self.conn.closeConn()
                 
-#print(daoPersonal().getMiRegistro(Personal=Personal(personalRut="3-3")))
+    def eliminarContacto(self, Personal):
+        sql_eliminarContactos ="DELETE FROM `contactos` WHERE contactoRut=%s"
+        sql_eliminarContactosTelefonos = """DELETE T.* FROM telefonosContacto T
+            JOIN contactos C ON telefonoContactoID = contactoID WHERE contactoRut=%s""" 
+        try:
+            self.cursor.execute(sql_eliminarContactosTelefonos, (Personal.contactoRut,))
+            self.conn.getConn().commit()
+            self.cursor.execute(sql_eliminarContactos, (Personal.contactoRut,))
+            self.conn.getConn().commit()
+        except Exception as error:
+            print("eliminarContacto(), error: ", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()       
+print(daoPersonal().getMiRegistro(Personal=Personal(personalRut="1-1")))

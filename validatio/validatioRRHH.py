@@ -3,6 +3,7 @@ sys.path.append(".")
 
 from dto.dtoRRHH import dtoRRHH
 from validatio.validatioPersonal import menuMiRegistro
+from validatio.validatioPersonal import miRegistro
 
 from datetime import date
 
@@ -95,9 +96,9 @@ def modificarRegistro():
           """)
     personalRut = input("RUT Personal a Modificar: ")
     
-    resultado = dtoRRHH().buscarRegistro(personalRut=personalRut)
+    resultado = miRegistro(personalRut=personalRut)
     
-    if resultado is not None:
+    if resultado is True:
         print("Registro: ", resultado)
         print("""
                 Datos Personales
@@ -136,7 +137,6 @@ def modificarRegistro():
         cargaNombre = input("Nombre: ")
         cargaGenero = input("Género: ")
         cargaParentesco = input("Parentesco: ")
-
 def eliminarRegistro():
     print("""
             Eliminar Registro Personal

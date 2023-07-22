@@ -37,9 +37,9 @@ class TelefonosContacto:
         return f" · {self.telefonoContactoNumeros}"
         
 class ContactosEmergencia(TelefonosContacto):
-    def __init__(self, contactoRut="", contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = ""):
+    def __init__(self, contactoID=str(uuid1()), contactoRut="", contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = ""):
         TelefonosContacto.__init__(self, telefonoContactoNumeros)
-        self.contactoID = str(uuid1())
+        self.contactoID = contactoID
         self.contactoRut = contactoRut
         self.contactoNombre = contactoNombre
         self.contactoRelacionPersonal = contactoRelacionPersonal
@@ -47,7 +47,10 @@ class ContactosEmergencia(TelefonosContacto):
         
     def __str__(self):
         return f"· RUT: {self.contactoRut} - Nombre: {self.contactoNombre} - Relacion: {self.contactoRelacionPersonal}"
-        
+    
+    def strTelefonos(self):
+        return f"· {self.telefonoContactoNumeros}"
+    
 class CargasFamiliares:
     def __init__(self, cargaRut, cargaNombre, cargaParentesco, cargaGenero):
         self.cargaRut = cargaRut

@@ -44,16 +44,18 @@ class dtoPersonal:
                 ContactosEmergencia(
                     contactoRut=contacto[0],
                     contactoNombre=contacto[1],
-                    contactoRelacionPersonal=contacto[2]
+                    contactoRelacionPersonal=contacto[2],
+                    contactoID=contacto[3]
                 )
             )
         telefonosContacto = []
         for telefonoContacto in registro[4]:
-            telefonosContacto.append(
-                TelefonosContacto(
-                    telefonoContactoNumeros=telefonoContacto[0]
+            telefonosContacto.append({
+                'contactoID':telefonoContacto['contactoID'],
+                'telefonosContacto':TelefonosContacto(
+                    telefonoContactoNumeros=telefonoContacto['telefonosContacto'][0][0]
                 )
-            )
+            })
         cargo = Cargo(
             cargoNombre=registro[0][4],
             cargoFechaIngreso=registro[0][5]
@@ -83,7 +85,16 @@ class dtoPersonal:
         )
         return resultado if resultado is not None else None
     
-    def agregarContacto(self):
+    def agregarContacto(self, personalRut, contactoRut, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros):
+        resultado = daoPersonal().agregarContacto(
+            Personal=Personal(
+                personalRut=personalRut, contactoRut=contactoRut, contactoNombre=contactoNombre,
+                contactoRelacionPersonal=contactoRelacionPersonal, telefonoContactoNumeros=telefonoContactoNumeros
+            )
+        )
+        return resultado if resultado is not None else None
+    
+    def eliminarContacto(self, personalRut, contactoRut):
         pass
-    def eliminarContacto(self, contactoRut):
-        pass
+    
+    

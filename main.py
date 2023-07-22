@@ -20,7 +20,6 @@ while intentos < 3:
             menuRRHH(usuarioPersonalRut=resultado.usuarioPersonalRut)
         elif tipoPersonal == "JRRHH":
             menuJRRHH(usuarioPersonalRut=resultado.usuarioPersonalRut)
-            pass
         break
     elif resultado == False:
         break

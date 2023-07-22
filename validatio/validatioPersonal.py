@@ -24,9 +24,7 @@ def miRegistro(personalRut):
                 
                 {mi_registro[1]['Departamento']}
                 
-                {mi_registro[1]['Area']}
-
-            """)
+                {mi_registro[1]['Area']}""")
         
         print("""
                         Cargas Familiares:""")
@@ -40,20 +38,21 @@ def miRegistro(personalRut):
             print(f""" 
                             {contacto}
                             
-                            Telefonos Contacto:""")
-        for telefonoContacto in mi_registro[5]:
-            print(f""" 
-                                {telefonoContacto}""")
+                                Telefonos Contacto:""")
+            for telefonoContacto in mi_registro[5]:
+                if contacto.contactoID == telefonoContacto['contactoID']:
+                    print(f""" 
+                                {telefonoContacto['telefonosContacto']}""")
     else:
         print(f"No existe registro RUT: {personalRut}")
         
-def modificarMiRegistro(peronalRut):
+def modificarMiRegistro(personalRut):
     print(f"""
                         Modificar Mi Registro
             ( Dejar en blanco los atributos que no quiera modificar )
           """)
     # Registro Usuario Para que Elija que datos modificar
-    miRegistro(personalRut=peronalRut)
+    miRegistro(personalRut=personalRut)
 
     modificar_datos_personales = input("Quiere modificar algún dato personal? [s/n] > ").lower()
     if modificar_datos_personales == "s":
@@ -61,16 +60,20 @@ def modificarMiRegistro(peronalRut):
         personalNuevoNombre = input("Nombre: ")
         personalNuevaDireccion = input("Direccion: ")
         personalNuevoGenero = input("Género: ")
-    
-    modificar_telefono = input("Desea modificar algún telefono? (s/n)").lower()
-    if modificar_telefono == "s":
-        # Modoficar Telefono
-        telefono_modificar = input("Número a modificar: ")
-        nuevo_telefono = input("Número nuevo: ")
-        telefonoPersonalNuevo = {
-                                    "telefono":telefono_modificar,
-                                    "nuevoTelefono":nuevo_telefono
-                                }
+        resultado_modificarPersonal = dtoPersonal().modificarMiRegistro(
+                personaRut=personalRut, personalNombre=personalNuevoNombre,
+                personalGenero=personalNuevoGenero, personalDireccion=personalNuevaDireccion
+            )
+        #return resultado_modificarPersonal if resultado_modificarPersonal is not None or resultado_modificarPersonal is not UnboundLocalError else None
+    # modificar_telefono = input("Desea modificar algún telefono? (s/n)").lower()
+    # if modificar_telefono == "s":
+    #     # Modoficar Telefono
+    #     telefono_modificar = input("Número a modificar: ")
+    #     nuevo_telefono = input("Número nuevo: ")
+    #     telefonoPersonalNuevo = {
+    #                                 "telefono":telefono_modificar,
+    #                                 "nuevoTelefono":nuevo_telefono
+    #                             }
     mod_or_add_contacto = input("Quiere Agregar o Eliminar algún Contacto? [s/n] > ").lower()
     if mod_or_add_contacto == "s":
         print("""
@@ -83,6 +86,7 @@ def modificarMiRegistro(peronalRut):
             print("""
                 Datos Nuevo Contacto de Emergencia
               """)
+            contactoRut = input("RUT: ")
             contactoNombre = input("Nombre: ")
             contactoRelacionPersonal = input("Relacion con Personal: ")
             telefonoContactoNumeros = []
@@ -91,11 +95,14 @@ def modificarMiRegistro(peronalRut):
                 telefonoContacto = input("Número de Telefono: +569 ")
                 telefonoContactoNumeros.append(telefonoContacto)
                 agregar_telefonoContacto = input("Desea agregar otro telefono? [s/n]").lower()
-
+            resultado_agregarContacto = dtoPersonal().agregarContacto(
+                personalRut=personalRut, contactoRut=contactoRut, contactoNombre=contactoNombre,
+                contactoRelacionPersonal=contactoRelacionPersonal, telefonoContactoNumeros=telefonoContactoNumeros
+            )
+            #return resultado_agregarContacto if resultado_agregarContacto is not None or resultado_agregarContacto is not UnboundLocalError else None
         elif opcion == 2:
             contactoRut = input("Ingrese RUT Contacto a Eliminar: ")
-            resultado_eliminar_contacto = dtoPersonal().eliminarContacto(contactoRut=contactoRut)
-            return resultado_eliminar_contacto if resultado_eliminar_contacto is not None else None
+            resultado_eliminarContacto = dtoPersonal().eliminarContacto(personalRut=personalRut, contactoRut=contactoRut)
         elif opcion == 3:
             pass
         else:
@@ -112,27 +119,30 @@ def modificarMiRegistro(peronalRut):
         if opcion == 1:
             print("""
                 Datos Nueva Carga Familiar
+                
               """)
             cargaRut = input("RUT: ")
             cargaNombre = input("Nombre: ")
             cargaGenero = input("Género: ")
             cargaParentesco = input("Parentesco: ")
             
-            resultado_add_carga = dtoPersonal().modificarMiRegistro()
+            resultado_agregarCarga = dtoPersonal().agregarCarga(
+                personalRut=personalRut, cargaRut=cargaRut,
+                cargaNombre=cargaNombre, cargaGenero=cargaGenero,
+                cargaParentesco=cargaParentesco
+            )
             
         elif opcion == 2:
+            print("""
+                Eliminar Carga Familiar
+                
+              """)
             cargaRut = input("Ingrese RUT Carga: ")
-            resultado_eliminar_carga = dtoPersonal().modificarMiRegistro()
-            return resultado_eliminar_carga if resultado_eliminar_carga is not None else None
+            resultado_eliminarCarga = dtoPersonal().eliminarCarga(personalRut=personalRut, cargaRut=cargaRut)
         elif opcion == 3:
             pass
         else:
             pass
-        
-    resultado = dtoPersonal().modificarMiRegistro(
-        personaRut=peronalRut, personalNombre=personalNuevoNombre,
-        personalGenero=personalNuevoGenero, personalDireccion=personalNuevaDireccion)
-    return resultado if resultado is not None else None
 
 def menuMiRegistro(personalRut):
     salir = "n"
