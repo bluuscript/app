@@ -76,10 +76,10 @@ class dtoPersonal:
         
         return personal, datos_laborales, telefonosPersonal, cargasPersonal, contactosEmergencia, telefonosContacto if registro is not None else None
     
-    def modificarMiRegistro(self, personaRut, personalNombre, personalGenero, personalDireccion):
+    def modificarMiRegistro(self, personalRut, personalNombre, personalGenero, personalDireccion):
         resultado = daoPersonal().modificarMiRegistro(
             Personal=Personal(
-                personalRut=personaRut, personalNombre=personalNombre,
+                personalRut=personalRut, personalNombre=personalNombre,
                 personalGenero=personalGenero, personalDireccion=personalDireccion
             )
         )
@@ -94,7 +94,20 @@ class dtoPersonal:
         )
         return resultado if resultado is not None else None
     
-    def eliminarContacto(self, personalRut, contactoRut):
-        pass
+    def eliminarContacto(self, contactoRut):
+        resultado = daoPersonal().eliminarContacto(Personal=Personal(contactoRut=contactoRut))
+        return resultado if resultado is not None else None
     
+    def agregarCarga(self, personalRut, cargaRut, cargaNombre, cargaGenero, cargaParentesco):
+        resultado = daoPersonal().agregarCarga(
+            Personal=Personal(
+                cargaRut=cargaRut, cargaNombre=cargaNombre,
+                cargaGenero=cargaGenero, cargaParentesco=cargaParentesco,
+                personalRut=personalRut
+            )
+        )
+        return resultado if resultado is not None else None
     
+    def eliminarCarga(self, cargaRut):
+        resultado = daoPersonal().eliminarCarga(Personal=Personal(cargaRut=cargaRut))
+        return resultado if resultado is not None else None

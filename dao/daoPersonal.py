@@ -71,12 +71,16 @@ class daoPersonal:
         return self.cursor.fetchone()
     
     def modificarMiRegistro(self, Personal):
-        sql_Personal = "UPDATE `personal` SET `personalNombre`=%s, `personalGenero`=%s, \
-            `personalDireccion`=%s WHERE `personalRut`=%s"
+        sql_Personal = """UPDATE personal SET personalNombre=%s, personalGenero=%s,
+            personalDireccion=%s WHERE personalRut=%s"""
         try:
             # Se modifica registro en Tabla => Personal
-            self.cursor.execute(sql_Personal, (Personal.personalNombre, Personal.personalGenero,\
+            self.cursor.execute(sql_Personal, (Personal.personalNombre, Personal.personalGenero,
                 Personal.personalDireccion, Personal.personalRut,))
+            if self.cursor.rowcount > 0:
+                print(f"Registro {Personal.personalRut} Modificado")
+            else:
+                print(f"Error al Modificar Personal {Personal.personalRut}")
         except Exception as error:
             print("modificarMiRegistro(), error:", error)
         finally:
@@ -113,9 +117,40 @@ class daoPersonal:
             self.conn.getConn().commit()
             self.cursor.execute(sql_eliminarContactos, (Personal.contactoRut,))
             self.conn.getConn().commit()
+            if self.cursor.rowcount > 0:
+                print(f"Contacto {Personal.contactoRut} Eliminado")
+            else:
+                print(f"Error al Eliminar Contacto {Personal.contactoRut}")
         except Exception as error:
             print("eliminarContacto(), error: ", error)
         finally:
             if self.conn.getConn().is_connected():
-                self.conn.closeConn()       
-print(daoPersonal().getMiRegistro(Personal=Personal(personalRut="1-1")))
+                self.conn.closeConn()
+                
+    def agregarCarga(self, Personal):
+        # Consulta para Insertar Cargas
+        sql_insertarCarga = """INSERT INTO cargas (cargaRut, cargaNombre, cargaParentesco, cargaGenero, personalRutRelacionCarga)
+            VALUES (%s,%s,%s,%s,%s)"""
+        try:
+             # Ejecutar consulta insertar Carga
+            self.cursor.execute(sql_insertarCarga, (Personal.cargaRut, Personal.cargaNombre, Personal.cargaParentesco,
+                                                Personal.cargaGenero, Personal.personalRut,))
+            self.conn.getConn().commit()
+        except Exception as error:
+            print("agregarCarga(), error: ", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()
+
+    def eliminarCarga(self, Personal):
+        sql_eliminarCarga = "DELETE FROM `cargas` WHERE `cargaRut`=%s"
+        try:
+            self.cursor.execute(sql_eliminarCarga, (Personal.cargaRut,))
+            self.conn.getConn().commit()
+        except Exception as error:
+            print("eliminarCarga(), error: ", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()
+
+#print(daoPersonal().getMiRegistro(Personal=Personal(personalRut="1-1")))

@@ -60,8 +60,8 @@ def modificarMiRegistro(personalRut):
         personalNuevoNombre = input("Nombre: ")
         personalNuevaDireccion = input("Direccion: ")
         personalNuevoGenero = input("Género: ")
-        resultado_modificarPersonal = dtoPersonal().modificarMiRegistro(
-                personaRut=personalRut, personalNombre=personalNuevoNombre,
+        return dtoPersonal().modificarMiRegistro(
+                personalRut=personalRut, personalNombre=personalNuevoNombre,
                 personalGenero=personalNuevoGenero, personalDireccion=personalNuevaDireccion
             )
         #return resultado_modificarPersonal if resultado_modificarPersonal is not None or resultado_modificarPersonal is not UnboundLocalError else None
@@ -102,7 +102,7 @@ def modificarMiRegistro(personalRut):
             #return resultado_agregarContacto if resultado_agregarContacto is not None or resultado_agregarContacto is not UnboundLocalError else None
         elif opcion == 2:
             contactoRut = input("Ingrese RUT Contacto a Eliminar: ")
-            resultado_eliminarContacto = dtoPersonal().eliminarContacto(personalRut=personalRut, contactoRut=contactoRut)
+            return dtoPersonal().eliminarContacto(contactoRut=contactoRut)
         elif opcion == 3:
             pass
         else:
@@ -138,7 +138,7 @@ def modificarMiRegistro(personalRut):
                 
               """)
             cargaRut = input("Ingrese RUT Carga: ")
-            resultado_eliminarCarga = dtoPersonal().eliminarCarga(personalRut=personalRut, cargaRut=cargaRut)
+            return dtoPersonal().eliminarCarga(cargaRut=cargaRut)
         elif opcion == 3:
             pass
         else:
