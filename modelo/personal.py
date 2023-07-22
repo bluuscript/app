@@ -10,46 +10,42 @@ class Cargo:
         self.cargoNombre = cargoNombre
         self.cargoFechaIngreso = cargoFechaIngreso
         
-    def printCargo(self):
-        
-        print(f"Cargo: {self.cargoNombre} - Fecha de Ingreso: {self.cargoFechaIngreso}")
+    def __str__(self):
+        return f"Cargo: {self.cargoNombre} - Fecha de Ingreso: {self.cargoFechaIngreso}"
         
 class Departamento:
     def __init__(self, departamentoNombre):
         self.departamentoID = str(uuid1())
         self.departamentoNombre=departamentoNombre
         
-    def printDepartamento(self):
-        
-        print(f"Nombre: {self.departamentoNombre}")
+    def __str__(self):
+        return f"Departamento: {self.departamentoNombre}"
 
 class Area:
     def __init__(self, areaNombre):
         self.areaID= str(uuid1())
         self.areaNombre=areaNombre
         
-    def printArea(self):
-        
-        print(f"Nombre: {self.areaNombre}")
+    def __str__(self):
+        return f"Area: {self.areaNombre}"
         
 class TelefonosContacto:
     def __init__(self, telefonoContactoNumeros):
         self.telefonoContactoNumeros = telefonoContactoNumeros
         
-    def printTelefonosContacto(self):
-        
-        print(f"\nTelefonos Contacto: {self.telefonoContactoNumeros}")
+    def __str__(self):
+        return f" · {self.telefonoContactoNumeros}"
         
 class ContactosEmergencia(TelefonosContacto):
-    def __init__(self, contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = []):
+    def __init__(self, contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = ""):
         TelefonosContacto.__init__(self, telefonoContactoNumeros)
         self.contactoID = str(uuid1())
         self.contactoNombre = contactoNombre
         self.contactoRelacionPersonal = contactoRelacionPersonal
         self.telefonoContactoNumeros = telefonoContactoNumeros
         
-    def printContactosEmergencia(self):
-        print(f"\nNombre: {self.contactoNombre} - Relacion: {self.contactoRelacionPersonal} - Telefonos Contacto: {self.telefonoContactoNumeros}")
+    def __str__(self):
+        return f"· Nombre: {self.contactoNombre} - Relacion: {self.contactoRelacionPersonal}"
         
 class CargasFamiliares:
     def __init__(self, cargaRut, cargaNombre, cargaParentesco, cargaGenero):
@@ -58,16 +54,15 @@ class CargasFamiliares:
         self.cargaParentesco = cargaParentesco
         self.cargaGenero = cargaGenero
         
-    def printCargasFamiliares(self):
-        return f"\nRUT: {self.cargaRut} - Nombre: {self.cargaNombre} - Género: {self.cargaGenero} - Parentesco: {self.cargaParentesco}"
+    def __str__(self):
+        return f"· RUT: {self.cargaRut} - Nombre: {self.cargaNombre} - Género: {self.cargaGenero} - Parentesco: {self.cargaParentesco}"
 
 class TelefonosPersonal:
     def __init__(self, telefonoPersonalNumeros):
         self.telefonoPersonalNumeros = telefonoPersonalNumeros
         
-    def printTelefonosPersonal(self):
-        
-        print(f"\nTelefonos Personal: {self.telefonoPersonalNumeros}")
+    def __str__(self):
+        return f" · {self.telefonoPersonalNumeros}"
             
 class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, ContactosEmergencia):
     
@@ -103,3 +98,7 @@ class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, C
     def __str__(self):
         # Resumen Personal
         return f"\n\tRUT: {self.personalRut} - Nombre: {self.personalNombre} - Género: {self.personalGenero} - Cargo: {self.cargoNombre}"
+
+    def datosPersonales(self):
+        # Datos Personales 
+        return f"\n\tRUT: {self.personalRut} - Nombre: {self.personalNombre} - Género: {self.personalGenero} - Dirección: {self.personalDireccion}"

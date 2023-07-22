@@ -29,8 +29,8 @@ class daoPersonal:
         # Consultar Cargas del Personal según personalRut
         sql_registroCargas = """SELECT cargaRut, cargaNombre, cargaGenero, cargaParentesco
             FROM cargas WHERE personalRutRelacionCarga = %s"""
-        # Consultar Contactos de Emergencia del Personal según personalRut --probar❗
-        sql_registroContactos = """SELECT contactoNombre, contactoRelacionConPersonal WHERE personalRutContacto = %s"""
+        # Consultar Contactos de Emergencia del Personal según personalRut
+        sql_registroContactos = """SELECT contactoNombre, contactoRelacionConPersonal FROM contactos WHERE personalRutContacto = %s"""
         # Consultar telefonos de contactos según contactoID = telefonoContactoID --probar❗
         sql_contactosTelefonos = """SELECT telefonoContactoNumero FROM telefonosContacto
             JOIN contactos ON personalContactoID = contactoID WHERE personalRutContacto = %s"""
@@ -39,21 +39,21 @@ class daoPersonal:
             self.cursor.execute(sql_registroPersonal, (Personal.personalRut,))
             personal = self.cursor.fetchone()
             
-            #self.cursor.execute(sql_personalTelefonos, (Personal.personalRut,))
-            #personalTelefonos = self.cursor.fetchall()
+            self.cursor.execute(sql_personalTelefonos, (Personal.personalRut,))
+            personalTelefonos = self.cursor.fetchall()
             
-            #self.cursor.execute(sql_registroCargas, (Personal.personalRut,))
-            #personalCargas = self.cursor.fetchall()
+            self.cursor.execute(sql_registroCargas, (Personal.personalRut,))
+            personalCargas = self.cursor.fetchall()
             
-            #self.cursor.execute(sql_registroContactos, (Personal.personalRut,))
-            #personalContactos = self.cursor.fetchall()
+            self.cursor.execute(sql_registroContactos, (Personal.personalRut,))
+            personalContactos = self.cursor.fetchall()
             
             #self.cursor.execute(sql_contactosTelefonos, (Personal.personalRut,))
             #contactoTelefonos = self.cursor.fetchall()
 
         except Exception as error:
             print(f"Obtener Mi registro, error: {error}")
-        return personal
+        return personal, personalTelefonos, personalCargas, personalContactos
     
     # Faltan Tablas ❗
     def modificarMiRegistro(self, Personal):

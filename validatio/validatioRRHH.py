@@ -151,8 +151,8 @@ def eliminarRegistro():
         print(f"No Existe Registro con RUT: {personalRut}")
 
 def menuRRHH(usuarioPersonalRut):
-    volver = "s"
-    while volver == "s":
+    salir = "n"
+    while salir == "n":
         print("""
                 1. Mi Registro
                     
@@ -180,4 +180,4 @@ def menuRRHH(usuarioPersonalRut):
             break
         else:
             pass
-        volver = input("Desea volver al Menu? [s/n] > ")
+        salir = input("Desea salir del Menu? [s/n] > ")

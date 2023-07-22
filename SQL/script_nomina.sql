@@ -88,4 +88,8 @@ CREATE TABLE
         CONSTRAINT PK_usuario PRIMARY KEY (usuarioCorreo)
     );
 
+-- Cuenta de Adminisrador predeterminada para insertar nuevos usuarios.
+
+INSERT INTO usuario (usuarioCorreo, usuarioNombre, usuarioContraseña, usuarioTipoPersonal, usuarioPersonalRut)
+VALUES ("admin@yury.cl", "admin", "21232f297a57a5a743894a0e4a801fc3", "admin", "11111111-1")
 

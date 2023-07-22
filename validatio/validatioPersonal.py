@@ -7,7 +7,37 @@ def miRegistro(personalRut):
     mi_registro = dtoPersonal().miRegistro(personalRut=personalRut)
     
     if mi_registro is not None:
-        print(mi_registro)
+        print(f"""
+                    Datos Personales
+                    
+                    {mi_registro[0]}
+                        
+                    Telefonos:""")
+        for telefono in mi_registro[2]:
+            print(f""" 
+                        {telefono}""")
+        print(f"""
+                    Datos Laborales
+                
+                {mi_registro[1]['Cargo']}
+                
+                {mi_registro[1]['Departamento']}
+                
+                {mi_registro[1]['Area']}
+
+            """)
+        
+        print("""
+                        Cargas Familiares:""")
+        for carga in mi_registro[3]:
+            print(f""" 
+                            {carga}""")
+        
+        print("""
+                        Contactos de Emergencia:""")
+        for contacto in mi_registro[4]:
+            print(f""" 
+                            {contacto}""")
     else:
         print(f"No existe registro RUT: {personalRut}")
         
@@ -78,5 +108,5 @@ def menuMiRegistro(personalRut):
             miRegistro(personalRut=personalRut)
         elif opcion == 2:
             modificarMiRegistro(personalRut=personalRut)
-        salir = input("\nSalir de Mi Registro? [s/n] > ")
+        salir = input("\nDesea Salir de Mi Registro? [s/n] > ")
         

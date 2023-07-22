@@ -6,9 +6,8 @@ from dto.dtoUsuario import UsuarioDTO
 # Para todo el Personal que Quiera Ingresar
 def autenticarUsuario():
     print("""
-                Login
-           Nomina Personal
-          El Correo de Yury
+                Iniciar Sesión
+                
         """)
     usuarioCorreo = input("Correo > ")
     usuarioContraseña = input("Contraseña > ")
@@ -43,4 +42,31 @@ def insertarUsuario():
         # Volver a Intentarlo 🚘 AUTO
         insertarUsuario()
 
-#insertarUsuario()
+def menuUsuario():
+    salir = "n"
+    while salir == "n":
+        print("""
+              Menu Usuario
+            Nomina Personal
+           El Correo de Yury
+           
+        1. Iniciar Sesión
+        2. Insertar Usuario (Administrador)
+        3. Salir
+              """)
+        opcion = int(input("> "))
+        if opcion == 1:
+            return autenticarUsuario()
+        elif opcion == 2:
+            resultado = autenticarUsuario()
+            if resultado.usuarioNombre == "admin":
+                insertarUsuario()
+            else:
+                print("Error en Credenciales de Administrador, Intente Nuevamente.")
+                menuUsuario()
+        elif opcion == 3:
+            return False
+        else:
+            menuUsuario() 
+        salir = input("Desea salir de Inicio de Sesión? [s/n]> ")   
+        
