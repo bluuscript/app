@@ -52,6 +52,7 @@ CREATE TABLE
 CREATE TABLE
     contactos (
         contactoID CHAR(36) NOT NULL,
+        contactoRut CHAR(10) NOT NULL,
         contactoNombre VARCHAR(35),
         contactoRelacionConPersonal VARCHAR(30),
         personalRutContacto CHAR(10) NOT NULL,

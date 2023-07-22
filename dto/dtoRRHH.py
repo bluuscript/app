@@ -11,13 +11,13 @@ class dtoRRHH:
                         cargoNombre, cargoFechaIngreso,
                         areaNombre, departamentoNombre,
                         cargaNombre, cargaParentesco, cargaGenero, cargaRut,
-                        contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros
+                        contactoRut, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros
                         ):
         
         resultado_agregar = daoRRHH().addPersonal(Personal(personalNombre=personalNombre, personalRut=personalRut, personalGenero=personalGenero, personalDireccion=personalDireccion,
                                     telefonoPersonalNumeros=telefonoPersonalNumeros, cargoNombre=cargoNombre, cargoFechaIngreso=cargoFechaIngreso,
                                     areaNombre=areaNombre,departamentoNombre=departamentoNombre,
-                                    contactoNombre=contactoNombre, contactoRelacionPersonal=contactoRelacionPersonal,telefonoContactoNumeros=telefonoContactoNumeros,
+                                    contactoRut=contactoRut, contactoNombre=contactoNombre, contactoRelacionPersonal=contactoRelacionPersonal,telefonoContactoNumeros=telefonoContactoNumeros,
                                     cargaNombre=cargaNombre, cargaParentesco=cargaParentesco, cargaGenero=cargaGenero, cargaRut=cargaRut))
         return resultado_agregar if resultado_agregar is not None else None
 

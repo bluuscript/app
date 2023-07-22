@@ -31,7 +31,8 @@ def filtrarRegistros():
         depFiltro = ""
         
     respuesta = dtoJRRHH().registrosNominaFiltro(
-        genFiltro, carFiltro, areaFiltro, depFiltro)
+        personalGenero=genFiltro, cargoNombre=carFiltro,
+        areaNombre=areaFiltro, departamentoNombre=depFiltro)
     print("""\n
             Registros Nomina Personal - Resumen
             
@@ -42,8 +43,8 @@ def filtrarRegistros():
 
         
 def menuJRRHH(usuarioPersonalRut):
-    volver = "s"
-    while volver == "s":
+    salir = "n"
+    while salir == "n":
         print("""
                 1. Mi Registro
                 
@@ -53,6 +54,7 @@ def menuJRRHH(usuarioPersonalRut):
                 3. Listar Registros
                 4. Modificar Registro
                 5. Eliminar Registro
+                
                 6. Filtrar Registros
                                 
                 7. Salir

@@ -47,6 +47,7 @@ def agregarPersonal():
         print("""
                 Datos Contactos de Emergencia
               """)
+        contactoRut = input("RUT: ")
         contactoNombre = input("Nombre: ")
         contactoRelacionPersonal = input("Relacion con Personal: ")
         telefonoContactoNumeros = []
@@ -68,7 +69,7 @@ def agregarPersonal():
             # Carga
             cargaRut=cargaRut, cargaNombre=cargaNombre, cargaGenero=cargaGenero, cargaParentesco=cargaParentesco,
             # Contacto
-            contactoNombre=contactoNombre, contactoRelacionPersonal=contactoRelacionPersonal, telefonoContactoNumeros=telefonoContactoNumeros
+            contactoRut=contactoRut, contactoNombre=contactoNombre, contactoRelacionPersonal=contactoRelacionPersonal, telefonoContactoNumeros=telefonoContactoNumeros
         )
         return insertarRegistro
     else: 

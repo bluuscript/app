@@ -18,4 +18,4 @@ class ConectarBD:
         self.__myconn.close()
 
     def getCursor(self):
-        return self.__myconn.cursor()
+        return self.__myconn.cursor(buffered=True)

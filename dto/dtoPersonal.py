@@ -5,6 +5,12 @@ from dao.daoPersonal import daoPersonal
 
 class dtoPersonal:
     
+    def existeRegistro(self, personalRut):
+        
+        resultado = daoPersonal().existeRegistro(Personal=Personal(personalRut=personalRut))
+        
+        return True if resultado is not None else False
+        
     def miRegistro(self, personalRut):
         # Obtener Registro mediante class daoPersonal()
         registro = daoPersonal().getMiRegistro(Personal=Personal(personalRut=personalRut))
@@ -36,8 +42,16 @@ class dtoPersonal:
         for contacto in registro[3]:
             contactosEmergencia.append(
                 ContactosEmergencia(
-                    contactoNombre=contacto[0],
-                    contactoRelacionPersonal=contacto[1]
+                    contactoRut=contacto[0],
+                    contactoNombre=contacto[1],
+                    contactoRelacionPersonal=contacto[2]
+                )
+            )
+        telefonosContacto = []
+        for telefonoContacto in registro[4]:
+            telefonosContacto.append(
+                TelefonosContacto(
+                    telefonoContactoNumeros=telefonoContacto[0]
                 )
             )
         cargo = Cargo(
@@ -58,16 +72,18 @@ class dtoPersonal:
             "Area": area
         }
         
-        return personal, datos_laborales, telefonosPersonal, cargasPersonal, contactosEmergencia if registro is not None else None
+        return personal, datos_laborales, telefonosPersonal, cargasPersonal, contactosEmergencia, telefonosContacto if registro is not None else None
     
-    def modificarMiRegistro(self, personaRut, personalNombre, personalGenero, personalDireccion, telefonoPersonalNumero,
-            contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros, cargaRut, cargaNombre, cargaParentesco, cargaGenero):
+    def modificarMiRegistro(self, personaRut, personalNombre, personalGenero, personalDireccion):
         resultado = daoPersonal().modificarMiRegistro(
             Personal=Personal(
-                personalRut=personaRut, personalNombre=personalNombre, personalGenero=personalGenero,
-                personalDireccion=personalDireccion, telefonoPersonalNumero=telefonoPersonalNumero,
-                contactoNombre=contactoNombre, contactoRelacionPersonal=contactoRelacionPersonal, telefonoContactoNumeros=telefonoContactoNumeros,
-                cargaRut=cargaRut, cargaNombre=cargaNombre, cargaParentesco=cargaParentesco, cargaGenero=cargaGenero
+                personalRut=personaRut, personalNombre=personalNombre,
+                personalGenero=personalGenero, personalDireccion=personalDireccion
             )
         )
         return resultado if resultado is not None else None
+    
+    def agregarContacto(self):
+        pass
+    def eliminarContacto(self, contactoRut):
+        pass

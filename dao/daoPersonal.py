@@ -30,30 +30,43 @@ class daoPersonal:
         sql_registroCargas = """SELECT cargaRut, cargaNombre, cargaGenero, cargaParentesco
             FROM cargas WHERE personalRutRelacionCarga = %s"""
         # Consultar Contactos de Emergencia del Personal según personalRut
-        sql_registroContactos = """SELECT contactoNombre, contactoRelacionConPersonal FROM contactos WHERE personalRutContacto = %s"""
+        sql_registroContactos = """SELECT contactoRut, contactoNombre, contactoRelacionConPersonal, contactoID FROM contactos WHERE personalRutContacto = %s"""
         # Consultar telefonos de contactos según contactoID = telefonoContactoID --probar❗
         sql_contactosTelefonos = """SELECT telefonoContactoNumero FROM telefonosContacto
-            JOIN contactos ON personalContactoID = contactoID WHERE personalRutContacto = %s"""
+            JOIN contactos ON telefonoContactoID = contactoID WHERE telefonoContactoID = %s"""
 
         try:
             self.cursor.execute(sql_registroPersonal, (Personal.personalRut,))
+            self.conn.getConn().commit()
             personal = self.cursor.fetchone()
             
             self.cursor.execute(sql_personalTelefonos, (Personal.personalRut,))
+            self.conn.getConn().commit()
             personalTelefonos = self.cursor.fetchall()
             
             self.cursor.execute(sql_registroCargas, (Personal.personalRut,))
+            self.conn.getConn().commit()
             personalCargas = self.cursor.fetchall()
             
             self.cursor.execute(sql_registroContactos, (Personal.personalRut,))
             personalContactos = self.cursor.fetchall()
+            self.conn.getConn().commit()
             
-            #self.cursor.execute(sql_contactosTelefonos, (Personal.personalRut,))
-            #contactoTelefonos = self.cursor.fetchall()
+            for contactoID in personalContactos[0]:
+                self.cursor.execute(sql_contactosTelefonos, (contactoID,))
+                contactoTelefonos = self.cursor.fetchall()
 
         except Exception as error:
             print(f"Obtener Mi registro, error: {error}")
-        return personal, personalTelefonos, personalCargas, personalContactos
+        return personal, personalTelefonos, personalCargas, personalContactos, contactoTelefonos
+    
+    def existeRegistro(self, Personal):
+        try:
+            self.cursor.execute("""SELECT personalRut FROM personal WHERE personalRut = %s""", (Personal.personalRut,))
+        except Exception as ex:
+            print("Existe Registro, error:", ex)
+        return self.cursor.fetchone()
+    
     
     # Faltan Tablas ❗
     def modificarMiRegistro(self, Personal):
@@ -79,8 +92,4 @@ class daoPersonal:
             if self.conn.getConn().is_connected():
                 self.conn.closeConn()
                 
-
-
-# reg = daoPersonal().getMiRegistro(Personal=
-#                                   Personal(personalRut="1-2"))
-# print(reg)
+#print(daoPersonal().getMiRegistro(Personal=Personal(personalRut="3-3")))

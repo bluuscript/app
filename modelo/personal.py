@@ -37,15 +37,16 @@ class TelefonosContacto:
         return f" · {self.telefonoContactoNumeros}"
         
 class ContactosEmergencia(TelefonosContacto):
-    def __init__(self, contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = ""):
+    def __init__(self, contactoRut="", contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = ""):
         TelefonosContacto.__init__(self, telefonoContactoNumeros)
         self.contactoID = str(uuid1())
+        self.contactoRut = contactoRut
         self.contactoNombre = contactoNombre
         self.contactoRelacionPersonal = contactoRelacionPersonal
         self.telefonoContactoNumeros = telefonoContactoNumeros
         
     def __str__(self):
-        return f"· Nombre: {self.contactoNombre} - Relacion: {self.contactoRelacionPersonal}"
+        return f"· RUT: {self.contactoRut} - Nombre: {self.contactoNombre} - Relacion: {self.contactoRelacionPersonal}"
         
 class CargasFamiliares:
     def __init__(self, cargaRut, cargaNombre, cargaParentesco, cargaGenero):
@@ -78,7 +79,7 @@ class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, C
                     # Tabla CargasFamiliares
                     cargaRut="", cargaNombre="", cargaGenero="", cargaParentesco="",
                     # Tabla ContactosEmergencia
-                    contactoNombre="", contactoRelacionPersonal="", telefonoContactoNumeros=[]
+                    contactoRut="", contactoNombre="", contactoRelacionPersonal="", telefonoContactoNumeros=[]
                     ):
         
         Cargo.__init__(self, cargoNombre, cargoFechaIngreso)
@@ -88,7 +89,7 @@ class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, C
         TelefonosPersonal.__init__(self, telefonoPersonalNumeros)
 
         CargasFamiliares.__init__(self, cargaRut, cargaNombre, cargaParentesco,  cargaGenero)
-        ContactosEmergencia.__init__(self, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros)
+        ContactosEmergencia.__init__(self, contactoRut, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros)
         
         self.personalRut = personalRut
         self.personalNombre = personalNombre
