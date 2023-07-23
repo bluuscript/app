@@ -19,7 +19,7 @@ git clone https://github.com/bluuscript/app.git
 
 ## Integrantes
 - [Monserrat Kerber]()
-- [Tomás Fuentes](tomas.fuentes07@inacapmail.cl)
+- [Tomás Fuentes](mailto:tomas.fuentes07@inacapmail.cl)
 - [Gabriel Vidal]()
 - [Manuel Calderon]()
 - [Héctor San Martin]()
