@@ -19,10 +19,4 @@ class daoJRRHH(daoRRHH):
         except Exception as ex:
             print(ex)
         return self.cursor.fetchall()
-    
-resul = daoJRRHH().getRegistrosFiltro(Personal=Personal(
-    cargoNombre="ca77"
-))
-
-print(resul)
 

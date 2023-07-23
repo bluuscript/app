@@ -9,7 +9,7 @@ class dtoPersonal:
         
         resultado = daoPersonal().existeRegistro(Personal=Personal(personalRut=personalRut))
         
-        return True if resultado is not None else False
+        return resultado if resultado is not None else None
         
     def miRegistro(self, personalRut):
         # Obtener Registro mediante class daoPersonal()

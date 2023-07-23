@@ -22,8 +22,3 @@ class dtoJRRHH(dtoRRHH):
                     )
                 lista_registros.append(registro_personal)
         return lista_registros if lista_registros is not None else None
-    
-# Pruebas:
-
-test_filtro_dto = dtoJRRHH().registrosNominaFiltro(cargoNombre="ca77")
-print(test_filtro_dto)

@@ -16,15 +16,13 @@ class UsuarioDTO:
                     usuarioPersonalRut=resultado[3])
         else: None
     
-    # insertarUsuario ✅
     def insertarUsuario(self, usuarioNombre, usuarioCorreo, usuarioContraseña, usuarioTipoPersonal, usuarioPersonalRut):
         daousuario = daoUsuario()
         resultado = daousuario.addUsuario(Usuario(usuarioNombre = usuarioNombre, usuarioCorreo = usuarioCorreo, usuarioContraseña = usuarioContraseña, usuarioTipoPersonal = usuarioTipoPersonal, usuarioPersonalRut = usuarioPersonalRut))
         return resultado if resultado else None
     
-    # buscarUsuario ✅
     def buscarUsuario(self, usuarioCorreo):
         daouser = daoUsuario()
         resultado = daouser.getUsuario(Usuario=Usuario(usuarioCorreo=usuarioCorreo))
         return Usuario(usuarioCorreo=resultado[0], usuarioNombre=resultado[1],
-                     suarioTipoPersonal=resultado[3], usuarioPersonalRut=resultado[4]) if resultado is not None else None
+                     usuarioTipoPersonal=resultado[3], usuarioPersonalRut=resultado[4]) if resultado is not None else None

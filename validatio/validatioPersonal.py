@@ -6,7 +6,7 @@ def miRegistro(personalRut):
 
     resultado = dtoPersonal().existeRegistro(personalRut=personalRut)
     
-    if resultado is True:
+    if resultado is not None:
         mi_registro = dtoPersonal().miRegistro(personalRut=personalRut)
         print(f"""
                     Datos Personales
@@ -66,7 +66,7 @@ def modificarMiRegistro(personalRut):
                 personalRut=personalRut, personalNombre=personalNuevoNombre,
                 personalGenero=personalNuevoGenero, personalDireccion=personalNuevaDireccion
             )
-    mod_or_add_contacto = input("\nQuiere Agregar o Eliminar algún Contacto? [s/n] > ").lower()
+    mod_or_add_contacto = input("\nQuiere Agregar o Eliminar algún Contacto de Emergencia? [s/n] > ").lower()
     if mod_or_add_contacto.strip() == "s":
         print("""
                 1. Añadir Contacto
@@ -100,7 +100,7 @@ def modificarMiRegistro(personalRut):
         else:
             pass
         
-    mod_or_add_carga = input("\nQuiere Agregar o Eliminar alguna Carga? [s/n] > ").lower
+    mod_or_add_carga = input("\nQuiere Agregar o Eliminar alguna Carga? [s/n] > ").lower()
     if mod_or_add_carga.strip() == "s":
         print("""
                 1. Añadir Carga

@@ -37,11 +37,10 @@ class dtoRRHH:
         
         resultado = daoRRHH().getOneRegistro(Personal=Personal(personalRut=personalRut))
         
-        personal = Personal(
+        return Personal(
                 personalRut=resultado[0], personalNombre=resultado[1],personalGenero=resultado[2],
                 cargoNombre=resultado[3]
-            )
-        return True if resultado is not None else None
+            ) if resultado is not None else None
     
     def modificarDatosLaborales(self, personalRut, cargoNombre, cargoFechaIngreso, departamentoNombre, areaNombre):
         resultado = daoRRHH().updateLaboral(Personal(personalRut = personalRut, cargoNombre = cargoNombre, cargoFechaIngreso = cargoFechaIngreso, departamentoNombre =  departamentoNombre, areaNombre = areaNombre))

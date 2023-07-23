@@ -80,7 +80,6 @@ def agregarPersonal():
 def registrosNomina():
     print("""
             Registros Nomina Personal - Resumen
-            
           """)
     registros = dtoRRHH().registrosNomina()
     if registros is not None:
@@ -100,7 +99,7 @@ def modificarRegistro():
         print("Dato vacío. Inténtelo de nuevo")
     resultado = dtoRRHH().buscarRegistro(personalRut=personalRut)
     
-    if resultado is True:
+    if resultado is not None:
         print(f"""              
                     ********** Registro de {personalRut} **********
                         
@@ -196,7 +195,9 @@ def modificarRegistro():
             elif opcion == 3:
                 pass
             else:
-                pass 
+                pass
+        else:
+            print(f"Personal RUT: {personalRut} Existe")
         
 def eliminarRegistro():
     print("""
