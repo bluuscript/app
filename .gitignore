@@ -1,3 +1,4 @@
+./gitignore
 /.DS_Store
 
 ./conn/__pycache__
@@ -6,4 +7,3 @@
 ./modelo/__pycache__
 ./utils/__pycache__
 ./validatio/__pycache__
-
