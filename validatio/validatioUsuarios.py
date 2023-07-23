@@ -20,7 +20,7 @@ def insertarUsuario():
     usuarioCorreo = input("Correo > ")
     if len(usuarioCorreo) == 0:
         salida = input("\nDesea Volver al Menú Principal [s/n] > ").lower()
-        if salida == "n":
+        if salida.strip() == "n":
             insertarUsuario()
         else:
             return
@@ -59,7 +59,7 @@ def menuUsuario():
             return autenticarUsuario()
         elif opcion == 2:
             resultado = autenticarUsuario()
-            if resultado.usuarioNombre == "admin":
+            if resultado is not None and resultado.usuarioNombre == "admin":
                 insertarUsuario()
             else:
                 print("Error en Credenciales de Administrador, Intente Nuevamente.")
@@ -68,5 +68,5 @@ def menuUsuario():
             return False
         else:
             menuUsuario() 
-        salir = input("Desea salir de Inicio de Sesión? [s/n]> ")   
+        salir = input("Desea salir de Inicio de Sesión? [s/n] > ")   
         

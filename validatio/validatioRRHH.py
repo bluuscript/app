@@ -32,8 +32,8 @@ def agregarPersonal():
                 Datos Laborales
               """)
         cargoNombre = input("Cargo: ")
-        cargoFechaIngreso = input("Fecha de Ingreso YYYY/MM/DD: ")
-        if cargoFechaIngreso == date:
+        cargoFechaIngreso = input("Fecha de Ingreso (YYYY-MM-DD): ")
+        if cargoFechaIngreso is not date:
             cargoFechaIngreso = date.today()
         departamentoNombre = input("Departamento: ")
         areaNombre = input("Area: ")
@@ -123,7 +123,9 @@ def modificarRegistro():
                 Nuevos Datos Laborales
               """)
             cargoNombre = input("Cargo: ")
-            cargoFechaIngreso = input("Fecha de Ingreso (formato YYYY/MM/DD): ")
+            cargoFechaIngreso = input("Fecha de Ingreso (YYYY-MM-DD): ")
+            if cargoFechaIngreso is not date:
+                cargoFechaIngreso = date.today()
             departamentoNombre = input("Departamento: ")
             areaNombre = input("Area: ")
             resp_lab = dtoRRHH().modificarDatosLaborales(personalRut = personalRut, cargoNombre = cargoNombre, cargoFechaIngreso = cargoFechaIngreso, areaNombre = areaNombre, departamentoNombre = departamentoNombre)
@@ -243,4 +245,4 @@ def menuRRHH(usuarioPersonalRut):
             break
         else:
             pass
-        salir = input("Desea salir del Menu? [s/n] > ")
+        salir = input("\nSalir del Menu? [s/n] > ")

@@ -13,7 +13,7 @@ while intentos < 3:
     if resultado is not None and resultado is not False:
         # Tipo de Personal en La Empresa Dividio en 3 Grupos
         tipoPersonal = resultado.usuarioTipoPersonal.upper()
-        print(f"Bienvenido(a) Sr(a). {resultado.usuarioNombre}")
+        print(f"Bienvenido(a) Sr(a). {resultado.usuarioNombre} - Tipo Personal: {resultado.usuarioTipoPersonal.upper()}")
         if tipoPersonal== "COMUN":
             menuMiRegistro(personalRut=resultado.usuarioPersonalRut)
         elif tipoPersonal == "RRHH":

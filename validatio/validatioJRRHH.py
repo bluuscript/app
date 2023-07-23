@@ -79,4 +79,4 @@ def menuJRRHH(usuarioPersonalRut):
             break
         else:
             pass
-        volver = input("Desea volver al Menu? [s/n] > ")
+        salir = input("\nSalir del Menu? [s/n] > ")
