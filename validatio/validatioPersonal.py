@@ -62,20 +62,10 @@ def modificarMiRegistro(personalRut):
         personalNuevoNombre = input("Nombre: ")
         personalNuevaDireccion = input("Direccion: ")
         personalNuevoGenero = input("Género: ")
-        return dtoPersonal().modificarMiRegistro(
+        modificar_personal = dtoPersonal().modificarMiRegistro(
                 personalRut=personalRut, personalNombre=personalNuevoNombre,
                 personalGenero=personalNuevoGenero, personalDireccion=personalNuevaDireccion
             )
-        #return resultado_modificarPersonal if resultado_modificarPersonal is not None or resultado_modificarPersonal is not UnboundLocalError else None
-    # modificar_telefono = input("Desea modificar algún telefono? (s/n)").lower()
-    # if modificar_telefono == "s":
-    #     # Modoficar Telefono
-    #     telefono_modificar = input("Número a modificar: ")
-    #     nuevo_telefono = input("Número nuevo: ")
-    #     telefonoPersonalNuevo = {
-    #                                 "telefono":telefono_modificar,
-    #                                 "nuevoTelefono":nuevo_telefono
-    #                             }
     mod_or_add_contacto = input("\nQuiere Agregar o Eliminar algún Contacto? [s/n] > ").lower()
     if mod_or_add_contacto.strip() == "s":
         print("""
@@ -104,7 +94,7 @@ def modificarMiRegistro(personalRut):
             #return resultado_agregarContacto if resultado_agregarContacto is not None or resultado_agregarContacto is not UnboundLocalError else None
         elif opcion == 2:
             contactoRut = input("Ingrese RUT Contacto a Eliminar: ")
-            return dtoPersonal().eliminarContacto(contactoRut=contactoRut)
+            eliminar_contacto = dtoPersonal().eliminarContacto(contactoRut=contactoRut)
         elif opcion == 3:
             pass
         else:
@@ -140,7 +130,7 @@ def modificarMiRegistro(personalRut):
                 
               """)
             cargaRut = input("Ingrese RUT Carga: ")
-            return dtoPersonal().eliminarCarga(cargaRut=cargaRut)
+            eliminar_carga = dtoPersonal().eliminarCarga(cargaRut=cargaRut)
         elif opcion == 3:
             pass
         else:
