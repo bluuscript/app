@@ -77,6 +77,7 @@ class daoPersonal:
             # Se modifica registro en Tabla => Personal
             self.cursor.execute(sql_Personal, (Personal.personalNombre, Personal.personalGenero,
                 Personal.personalDireccion, Personal.personalRut,))
+            self.conn.getConn().commit()
             if self.cursor.rowcount > 0:
                 print(f"Registro {Personal.personalRut} Modificado")
             else:

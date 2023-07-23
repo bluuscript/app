@@ -39,10 +39,12 @@ def miRegistro(personalRut):
                             {contacto}
                             
                                 Telefonos Contacto:""")
-            for telefonoContacto in mi_registro[5]:
-                if contacto.contactoID == telefonoContacto['contactoID']:
-                    print(f""" 
-                                {telefonoContacto['telefonosContacto']}""")
+            for telefonosContacto in mi_registro[5]:
+                if contacto.contactoID == telefonosContacto['contactoID']:
+                    for telefonoContacto in telefonosContacto['telefonosContacto']:
+                        print(f""" 
+                                        ·{telefonoContacto[0]}""")
+                        
     else:
         print(f"No existe registro RUT: {personalRut}")
         

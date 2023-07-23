@@ -51,10 +51,8 @@ class dtoPersonal:
         telefonosContacto = []
         for telefonoContacto in registro[4]:
             telefonosContacto.append({
-                'contactoID':telefonoContacto['contactoID'],
-                'telefonosContacto':TelefonosContacto(
-                    telefonoContactoNumeros=telefonoContacto['telefonosContacto'][0][0]
-                )
+                'contactoID': telefonoContacto['contactoID'],
+                'telefonosContacto': telefonoContacto['telefonosContacto']
             })
         cargo = Cargo(
             cargoNombre=registro[0][4],

@@ -30,11 +30,12 @@ class Area:
         return f"Area: {self.areaNombre}"
         
 class TelefonosContacto:
-    def __init__(self, telefonoContactoNumeros):
+    def __init__(self, telefonoContactoNumeros=[]):
         self.telefonoContactoNumeros = telefonoContactoNumeros
         
     def __str__(self):
-        return f" · {self.telefonoContactoNumeros}"
+        for telefonoContacto in self.telefonoContactoNumeros:
+            return f" · {telefonoContacto}"
         
 class ContactosEmergencia(TelefonosContacto):
     def __init__(self, contactoID=str(uuid1()), contactoRut="", contactoNombre = "", contactoRelacionPersonal = "", telefonoContactoNumeros = []):
