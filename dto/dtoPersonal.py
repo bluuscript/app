@@ -45,7 +45,7 @@ class dtoPersonal:
                     contactoRut=contacto[0],
                     contactoNombre=contacto[1],
                     contactoRelacionPersonal=contacto[2],
-                    contactoID=contacto[3]
+                    telefonoContactoID=contacto[3]
                 )
             )
         telefonosContacto = []

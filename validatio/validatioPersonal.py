@@ -40,7 +40,7 @@ def miRegistro(personalRut):
                             
                                 Telefonos Contacto:""")
             for telefonosContacto in mi_registro[5]:
-                if contacto.contactoID == telefonosContacto['contactoID']:
+                if contacto.telefonoContactoID == telefonosContacto['contactoID']:
                     for telefonoContacto in telefonosContacto['telefonosContacto']:
                         print(f""" 
                                         · {telefonoContacto[0]}""")
