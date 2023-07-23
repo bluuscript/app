@@ -2,6 +2,7 @@ import sys
 sys.path.append(".")
 
 from dao.daoRRHH import daoRRHH
+from modelo.personal import Personal
 
 class daoJRRHH(daoRRHH):
 
@@ -18,4 +19,10 @@ class daoJRRHH(daoRRHH):
         except Exception as ex:
             print(ex)
         return self.cursor.fetchall()
+    
+resul = daoJRRHH().getRegistrosFiltro(Personal=Personal(
+    cargoNombre="ca77"
+))
+
+print(resul)
 

@@ -6,27 +6,30 @@ from validatio.validatioRRHH import *
 from validatio.validatioPersonal import menuMiRegistro
 
 def filtrarRegistros():
-    filter1 = input("\n¿Desea filtrar por Género? (s/n)\n:")
+    print("""
+                Filtrar Registros Nomina
+          """)
+    filter1 = input("\n¿Desea filtrar por Género? [s/n] > ")
     if filter1 == "s":
-        genFiltro = input("Ingrese Género a filtrar\n:")
+        genFiltro = input("Ingrese Género: ")
     else:
         genFiltro = ""
         
-    filter2 = input("\n¿Desea filtrar por Cárgo? (s/n)\n:")
+    filter2 = input("\n¿Desea filtrar por Cárgo? [s/n] > ")
     if filter2 == "s":
-        carFiltro = input("Ingrese Cargo a filtrar\n:")
+        carFiltro = input("Ingrese Cargo: ")
     else:
         carFiltro = ""
         
-    filter3 = input("\n¿Desea filtrar por Área? (s/n)\n:")
+    filter3 = input("\n¿Desea filtrar por Área? [s/n] > ")
     if filter3 == "s":
-        areaFiltro = input("Ingrese Área a filtrar\n:")
+        areaFiltro = input("Ingrese Área: ")
     else:
         areaFiltro = ""
         
-    filter4 = input("\n¿Desea filtrar por Departamento? (s/n)\n:")
+    filter4 = input("\n¿Desea filtrar por Departamento? [s/n] > ")
     if filter4 == "s":
-        depFiltro = input("Ingrese Departamento a filtrar\n:")
+        depFiltro = input("Ingrese Departamento: ")
     else:
         depFiltro = ""
         
@@ -39,16 +42,16 @@ def filtrarRegistros():
           """)
     if respuesta is not None:
         for registro in respuesta:
-            print(registro)
+            #registro:Personal
+            print(registro.datosFiltro())
 
-        
 def menuJRRHH(usuarioPersonalRut):
     salir = "n"
     while salir == "n":
         print("""
                 1. Mi Registro
                 
-                    Administrar Nomina
+                     ✉📮 Administrar Nomina 🗃️
                     
                 2. Agregar Nuevo Registro
                 3. Listar Registros

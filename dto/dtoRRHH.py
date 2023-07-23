@@ -37,20 +37,48 @@ class dtoRRHH:
         
         resultado = daoRRHH().getOneRegistro(Personal=Personal(personalRut=personalRut))
         
-        return Personal(
+        personal = Personal(
                 personalRut=resultado[0], personalNombre=resultado[1],personalGenero=resultado[2],
                 cargoNombre=resultado[3]
-            ) if resultado is not None else None
+            )
+        return True if resultado is not None else None
     
-    def modificarPersonal(self, personalRut, personalNombre, personalGenero, personalDireccion, telefonoPersonalNumero, cargoNombre, cargoFechaIngreso, areaNombre,
-                    departamentoNombre, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros, cargaNombre, cargaParentesco, cargaGenero, cargaRut):
+    def modificarDatosLaborales(self, personalRut, cargoNombre, cargoFechaIngreso, departamentoNombre, areaNombre):
+        resultado = daoRRHH().updateLaboral(Personal(personalRut = personalRut, cargoNombre = cargoNombre, cargoFechaIngreso = cargoFechaIngreso, departamentoNombre =  departamentoNombre, areaNombre = areaNombre))
+        return resultado if resultado is not None else None
+       
+    def modificarPersonal(self, personalRut, personalNombre, personalGenero, personalDireccion):
         
-        resultado_modificar = daoRRHH().updatePersonal(Personal(personalNombre=personalNombre, personalRut=personalRut, personalGenero=personalGenero, personalDireccion=personalDireccion,\
-                                        telefonoPersonalNumero=telefonoPersonalNumero, cargoNombre=cargoNombre, cargoFechaIngreso=cargoFechaIngreso, areaNombre=areaNombre, departamentoNombre=departamentoNombre,\
-                                        contactoNombre=contactoNombre, contactoRelacionPersonal=contactoRelacionPersonal, telefonoContactoNumeros=telefonoContactoNumeros,
-                                        cargaNombre=cargaNombre, cargaParentesco=cargaParentesco, cargaGenero=cargaGenero, cargaRut=cargaRut))
+        resultado_modificar = daoRRHH().updatePersonal(Personal(personalNombre=personalNombre, personalRut=personalRut, personalGenero=personalGenero, personalDireccion=personalDireccion))
         return resultado_modificar if resultado_modificar is not None else None
     
+    def agregarContacto(self, personalRut, contactoRut, contactoNombre, contactoRelacionPersonal, telefonoContactoNumeros):
+        resultado = daoRRHH().agregarContacto(
+            Personal=Personal(
+                personalRut=personalRut, contactoRut=contactoRut, contactoNombre=contactoNombre,
+                contactoRelacionPersonal=contactoRelacionPersonal, telefonoContactoNumeros=telefonoContactoNumeros
+            )
+        )
+        return resultado if resultado is not None else None
+    
+    def eliminarContacto(self, contactoRut):
+        resultado = daoRRHH().eliminarContacto(Personal=Personal(contactoRut=contactoRut))
+        return resultado if resultado is not None else None
+    
+    def agregarCarga(self, personalRut, cargaRut, cargaNombre, cargaGenero, cargaParentesco):
+        resultado = daoRRHH().agregarCarga(
+            Personal=Personal(
+                cargaRut=cargaRut, cargaNombre=cargaNombre,
+                cargaGenero=cargaGenero, cargaParentesco=cargaParentesco,
+                personalRut=personalRut
+            )
+        )
+        return resultado if resultado is not None else None
+    
+    def eliminarCarga(self, cargaRut):
+        resultado = daoRRHH().eliminarCarga(Personal=Personal(cargaRut=cargaRut))
+        return resultado if resultado is not None else None
+
     def eliminarPersonal(self, personalRut):
         
         resultado_eliminar = daoRRHH().deletePersonal(Personal=Personal(personalRut=personalRut))

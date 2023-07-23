@@ -107,3 +107,7 @@ class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, C
     def datosPersonales(self):
         # Datos Personales 
         return f"\n\tRUT: {self.personalRut} - Nombre: {self.personalNombre} - Género: {self.personalGenero} - Dirección: {self.personalDireccion}"
+
+    def datosFiltro(self):
+        # Datos Personal Filtrados
+        return f"\n\tRUT: {self.personalRut} - Nombre: {self.personalNombre} - Género: {self.personalGenero} - Cargo: {self.cargoNombre} - Departamento: {self.departamentoNombre} - Area: {self.areaNombre}"

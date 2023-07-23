@@ -43,7 +43,7 @@ def miRegistro(personalRut):
                 if contacto.contactoID == telefonosContacto['contactoID']:
                     for telefonoContacto in telefonosContacto['telefonosContacto']:
                         print(f""" 
-                                        ·{telefonoContacto[0]}""")
+                                        · {telefonoContacto[0]}""")
                         
     else:
         print(f"No existe registro RUT: {personalRut}")
@@ -56,8 +56,8 @@ def modificarMiRegistro(personalRut):
     # Registro Usuario Para que Elija que datos modificar
     miRegistro(personalRut=personalRut)
 
-    modificar_datos_personales = input("Quiere modificar algún dato personal? [s/n] > ").lower()
-    if modificar_datos_personales == "s":
+    modificar_datos_personales = input("\nQuiere modificar algún dato personal? [s/n] > ").lower()
+    if modificar_datos_personales.strip() == "s":
         # Modificar Datos Personales
         personalNuevoNombre = input("Nombre: ")
         personalNuevaDireccion = input("Direccion: ")
@@ -76,8 +76,8 @@ def modificarMiRegistro(personalRut):
     #                                 "telefono":telefono_modificar,
     #                                 "nuevoTelefono":nuevo_telefono
     #                             }
-    mod_or_add_contacto = input("Quiere Agregar o Eliminar algún Contacto? [s/n] > ").lower()
-    if mod_or_add_contacto == "s":
+    mod_or_add_contacto = input("\nQuiere Agregar o Eliminar algún Contacto? [s/n] > ").lower()
+    if mod_or_add_contacto.strip() == "s":
         print("""
                 1. Añadir Contacto
                 2. Eliminar Contacto
@@ -93,10 +93,10 @@ def modificarMiRegistro(personalRut):
             contactoRelacionPersonal = input("Relacion con Personal: ")
             telefonoContactoNumeros = []
             agregar_telefonoContacto = "s"
-            while agregar_telefonoContacto == "s":
+            while agregar_telefonoContacto.strip() == "s":
                 telefonoContacto = input("Número de Telefono: +569 ")
                 telefonoContactoNumeros.append(telefonoContacto)
-                agregar_telefonoContacto = input("Desea agregar otro telefono? [s/n]").lower()
+                agregar_telefonoContacto = input("\nDesea agregar otro telefono? [s/n]").lower()
             resultado_agregarContacto = dtoPersonal().agregarContacto(
                 personalRut=personalRut, contactoRut=contactoRut, contactoNombre=contactoNombre,
                 contactoRelacionPersonal=contactoRelacionPersonal, telefonoContactoNumeros=telefonoContactoNumeros
@@ -110,8 +110,8 @@ def modificarMiRegistro(personalRut):
         else:
             pass
         
-    mod_or_add_carga = input("Quiere Agregar o Eliminar alguna Carga? [s/n] > ")
-    if mod_or_add_carga == "s":
+    mod_or_add_carga = input("\nQuiere Agregar o Eliminar alguna Carga? [s/n] > ").lower
+    if mod_or_add_carga.strip() == "s":
         print("""
                 1. Añadir Carga
                 2. Eliminar Carga
@@ -150,8 +150,8 @@ def menuMiRegistro(personalRut):
     salir = "n"
     while salir == "n":
         print(f"""
-                1. Ver Registro ✅
-                2. Modificar Mi Registro ❌
+                1. Ver Registro            
+                2. Modificar Mi Registro    
                 3. Salir
         """)
         opcion = int(input("> "))

@@ -91,34 +91,126 @@ class daoRRHH:
             print("getOneRegistro error:", ex)
         return self.cursor.fetchone()
     
-    def updatePersonal(self, Personal):
-        # Modificar Datos Personales
-        sql_personal=""""UPDATE `personal` SET `personalNombre`=%s, `personalGenero`=%s, `personalDireccion`=%s
-            WHERE `personalRut`=%s"""
-        # Modificar Telefono Personal
-        sql_personalTelefonos = """UPDATE telefonosPersonal SET telefonoPersonalNumero=%s
-            WHERE telefonoContactoNumero=%s"""
-        # Modificar Cargo, Departamento y Area del Personal
+    def updateLaboral(self, Personal):
         sql_cargo = """UPDATE cargo SET cargoNombre=%s, cargoFechaIngreso=%s
             WHERE cargoID = (SELECT cargoID FROM personal WHERE personalRut=%s)"""  
         sql_departamento = """UPDATE departamento SET departamentoNombre=%s
             WHERE departamentoID = (SELECT departamentoID FROM personal WHERE personalRut=%s)"""
         sql_area = """UPDATE area SET areaNombre=%s
             WHERE areaID = (SELECT areaID FROM personal WHERE personalRut=%s)"""
+        try:
+            self.cursor.execute(sql_cargo, (Personal.cargoNombre, Personal.cargoFechaIngreso, Personal.personalRut))
+            self.conn.getConn().commit()
+            self.cursor.execute(sql_departamento, (Personal.departamentoNombre , Personal.personalRut))
+            self.conn.getConn().commit()
+            self.cursor.execute(sql_area, (Personal.areaNombre, Personal.personalRut))
+            self.conn.getConn().commit()
+        except Exception as error:
+            print("Error en modificar datos laborales:", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()
+
+    def updatePersonal(self, Personal):
+        # Modificar Datos Personales
+        sql_personal="""UPDATE `personal` SET `personalNombre`=%s, `personalGenero`=%s, `personalDireccion`=%s
+            WHERE `personalRut`=%s"""
+        # # Modificar Telefono Personal
+        # sql_personalTelefonos = """UPDATE telefonosPersonal SET telefonoPersonalNumero=%s
+        #     WHERE telefonoContactoNumero=%s"""
+        # Modificar Cargo, Departamento y Area del Personal
+        # sql_cargo = """UPDATE cargo SET cargoNombre=%s, cargoFechaIngreso=%s
+        #     WHERE cargoID = (SELECT cargoID FROM personal WHERE personalRut=%s)"""  
+        # sql_departamento = """UPDATE departamento SET departamentoNombre=%s
+        #     WHERE departamentoID = (SELECT departamentoID FROM personal WHERE personalRut=%s)"""
+        # sql_area = """UPDATE area SET areaNombre=%s
+        #     WHERE areaID = (SELECT areaID FROM personal WHERE personalRut=%s)"""
         
-        # Modificar Cargas, Contactos => telefonosContacto
-        sql_carga = """UPDATE cargas SET cargaNombre=%s, cargaGenero=%s, cargaParentesco=%s
-                WHERE personalRutRelacionCarga=%s"""
-        sql_contacto = """UPDATE contactos SET contactoNombre=%s, contactoRelacionConPersonal=%s
-            WHERE personalRutContacto=%s"""
-        sql_contactoTelefono="""UPDATE telefonosContacto SET telefonoContactoNumero=%s
-            WHERE telefonoContactoNumero=%s"""
+        # # Modificar Cargas, Contactos => telefonosContacto
+        # sql_carga = """UPDATE cargas SET cargaNombre=%s, cargaGenero=%s, cargaParentesco=%s
+        #         WHERE personalRutRelacionCarga=%s"""
+        # sql_contacto = """UPDATE contactos SET contactoNombre=%s, contactoRelacionConPersonal=%s
+        #     WHERE personalRutContacto=%s"""
+        # sql_contactoTelefono="""UPDATE telefonosContacto SET telefonoContactoNumero=%s
+        #     WHERE telefonoContactoNumero=%s"""
         try:
             self.cursor.execute(sql_personal, (Personal.personalNombre, Personal.personalGenero,
                 Personal.personalDireccion, Personal.personalRut,))
             self.conn.getConn().commit()
+            # self.cursor.execute(sql_cargo, (Personal.cargoNombre, Personal.cargoFechaIngreso, Personal.personalRut,))
+            # self.conn.getConn().commit()
+            # self.cursor.execute(sql_departamento, (Personal.departamentoNombre , Personal.personalRut,))
+            # self.conn.getConn().commit()
+            # self.cursor.execute(sql_area, (Personal.areaNombre, Personal.personalRut,))
+            # self.conn.getConn().commit()
         except Exception as error:
             print("updatePersonal(), error", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()
+    
+    def agregarContacto(self, Personal):
+        # Consulta para Insertar Contactos Personal
+        sql_agregarContacto="""INSERT INTO contactos ( contactoID, contactoRut, contactoNombre, contactoRelacionConPersonal, personalRutContacto)
+            VALUES (%s,%s,%s,%s,%s)"""
+        # Consulta para Insertar Telefonos del Contacto
+        sql_insertarTelefonosContacto = """INSERT INTO telefonosContacto (telefonoContactoNumero, telefonoContactoID)
+            VALUES (%s,%s)"""
+        try:
+             # Ejecutar consulta insertar contactos
+            self.cursor.execute(sql_agregarContacto, (Personal.contactoID, Personal.contactoRut, Personal.contactoNombre, Personal.contactoRelacionPersonal, Personal.personalRut,))
+            self.conn.getConn().commit()
+            # Insertar cada telefono contacto:
+            for telefonoContacto in Personal.telefonoContactoNumeros:
+                self.cursor.execute(sql_insertarTelefonosContacto, (telefonoContacto, Personal.contactoID,))
+                self.conn.getConn().commit()
+        except Exception as error:
+            print("agregarContacto(), error: ", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()
+                
+    def eliminarContacto(self, Personal):
+        sql_eliminarContactos ="DELETE FROM `contactos` WHERE contactoRut=%s"
+        sql_eliminarContactosTelefonos = """DELETE T.* FROM telefonosContacto T
+            JOIN contactos C ON telefonoContactoID = contactoID WHERE contactoRut=%s""" 
+        try:
+            self.cursor.execute(sql_eliminarContactosTelefonos, (Personal.contactoRut,))
+            self.conn.getConn().commit()
+            self.cursor.execute(sql_eliminarContactos, (Personal.contactoRut,))
+            self.conn.getConn().commit()
+            if self.cursor.rowcount > 0:
+                print(f"Contacto {Personal.contactoRut} Eliminado")
+            else:
+                print(f"Error al Eliminar Contacto {Personal.contactoRut}")
+        except Exception as error:
+            print("eliminarContacto(), error: ", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()
+                
+    def agregarCarga(self, Personal):
+        # Consulta para Insertar Cargas
+        sql_insertarCarga = """INSERT INTO cargas (cargaRut, cargaNombre, cargaParentesco, cargaGenero, personalRutRelacionCarga)
+            VALUES (%s,%s,%s,%s,%s)"""
+        try:
+             # Ejecutar consulta insertar Carga
+            self.cursor.execute(sql_insertarCarga, (Personal.cargaRut, Personal.cargaNombre, Personal.cargaParentesco,
+                                                Personal.cargaGenero, Personal.personalRut,))
+            self.conn.getConn().commit()
+        except Exception as error:
+            print("agregarCarga(), error: ", error)
+        finally:
+            if self.conn.getConn().is_connected():
+                self.conn.closeConn()
+
+    def eliminarCarga(self, Personal):
+        sql_eliminarCarga = "DELETE FROM `cargas` WHERE `cargaRut`=%s"
+        try:
+            self.cursor.execute(sql_eliminarCarga, (Personal.cargaRut,))
+            self.conn.getConn().commit()
+        except Exception as error:
+            print("eliminarCarga(), error: ", error)
         finally:
             if self.conn.getConn().is_connected():
                 self.conn.closeConn()
