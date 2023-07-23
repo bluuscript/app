@@ -53,7 +53,6 @@ class daoRRHH:
             self.cursor.execute(sql_insertarCargas, (Personal.cargaRut, Personal.cargaNombre, Personal.cargaParentesco, Personal.cargaGenero, Personal.personalRut,))
             # Ejecutar consulta insertar contactos
             self.cursor.execute(sql_insertarContactos, (Personal.contactoID, Personal.contactoRut, Personal.contactoNombre, Personal.contactoRelacionPersonal, Personal.personalRut,))
-            self.conn.getConn().commit()
             # Insertar cada telefono contacto:
             for telefonoContacto in Personal.telefonoContactoNumeros:
                 self.cursor.execute(sql_insertarTelefonosContacto, (telefonoContacto, Personal.contactoID,))
