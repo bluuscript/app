@@ -1,6 +1,8 @@
 # NominaPy
 
-NominaPy es una app MVC que Administra la Nomina de Trabajadores de tu Empresa.
+NominaPy es una app MVC que Administra la Nomina de Trabajadores de tu Empresa. Ejemplos mediante un video explicativo:
+
+### [Video Explicativo](https://www.youtube.com/watch?v=Ulvldfp0p4o&ab_channel=XxJanoxX)
 
 ## Descarga
 
