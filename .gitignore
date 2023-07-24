@@ -1,4 +1,3 @@
-.gitignore
 /.DS_Store
 
 /conn/__pycache__
