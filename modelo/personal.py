@@ -73,7 +73,7 @@ class TelefonosPersonal:
 class Personal(Cargo, Departamento, Area, TelefonosPersonal, CargasFamiliares, ContactosEmergencia):
     
     def __init__(self,
-                    #Tabla Personal
+                    # Tabla Personal
                     personalRut="", personalNombre="", personalGenero="", personalDireccion="",
                     # Tabla Cargo
                     cargoNombre="", cargoFechaIngreso="",
